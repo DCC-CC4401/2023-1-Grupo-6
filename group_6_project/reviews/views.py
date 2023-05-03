@@ -25,12 +25,16 @@ def register_user(request):
      #Tomar los elementos del formulario que vienen en request.POST
         # TODO: authenticate user and redirect to home page
         form = RegisterForm(request.POST)
+        print(form)
         if form.is_valid():
-            username=form.cleaned_data.get('nick_name') 
+            first_name = form.cleaned_data.get('first_name') 
+            last_name = form.cleaned_data.get('last_name') 
+            username=form.cleaned_data.get('username') 
             password=form.cleaned_data.get('password') 
             email=form.cleaned_data.get('email')
-            apodo=form.cleaned_data.get('apodo')
-            user = User.objects.create_user(username=username, password=password, email=email, apodo=apodo) 
+            country=form.cleaned_data.get('country')
+            birthdate=form.cleaned_data.get('birth_date')
+            user = User.objects.create_user(first_name=first_name, last_name=last_name,username=username, password=password, email=email, country=country, birthdate=birthdate) 
             return HttpResponseRedirect('/login/')
         
      #Crear el nuevo usuario

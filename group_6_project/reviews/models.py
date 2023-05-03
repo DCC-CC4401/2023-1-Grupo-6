@@ -1,14 +1,23 @@
 from django.utils import timezone
 from django.db import models
+# import json
 
 # Create your models here.
 
 from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
-  # paises = [('La','La'),('El','El'), ('Le','Le'),('Otro','Otro')]
-  # pais = models.CharField(max_length=5,choices=paises)
-  apodo = models.CharField(max_length=30)
+   birthdate = models.DateField(null=True, blank=True)
+   password = models.CharField(max_length=50)
+   country = models.CharField(max_length=50,  blank=True, null=True)
+
+
+   def get_age(self):
+         if self.birthdate:
+            today = timezone.now().date()
+            return today.year - self.birthdate.year - ((today.month, today.day) < (self.birthdate.month, self.birthdate.day))
+         else:
+            return None
     
 
 class Review(models.Model):  # Todolist able name that inherits models.Model
