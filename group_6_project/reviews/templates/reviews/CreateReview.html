@@ -8,6 +8,12 @@
 </head>
 <body>
 
+    {% if user.is_authenticated %}
+        Welcome, {{ user.username }} (<a href="{% url 'register_user' %}">logout</a>)
+    {% else %}
+        <a href="{% url 'login' %}">login</a>
+    {% endif %}
+
     {% block content %}
     <h2>CreateReview</h2>
         <form method="post">

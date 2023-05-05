@@ -82,6 +82,10 @@ DATABASES = {
 }
 
 
+LOGIN_URL = '/login/'
+
+LOGOUT_URL = '/createReview/'
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
