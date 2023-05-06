@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    {% block content %}
+    <h2>ReviewFlyers</h2>
+    {% if user.is_authenticated %}
+        Welcome, {{ user.username }} (<a href="{% url 'logout' %}">logout</a>)
+   
+    {% else %}
+        <a href="{% url 'login' %}"><button>Ingresa</button></a>
+        <a href="{% url 'register_user' %}"><button>Registrate</button></a>
+    {% endif %}
+
+    <a href="{% url 'CreateReview' %}"><button>Crea tu reseña</button></a>
+    <a href="{% url 'ShowReviews' %}"><button>Ver últimas reseñas</button></a>
+ 
+    {% endblock %}
+    
+</body>
+</html>
