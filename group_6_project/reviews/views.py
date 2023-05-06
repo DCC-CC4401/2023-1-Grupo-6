@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import LogInForm, RegisterForm, CreateReviewForm
-from reviews.models import User
+from reviews.models import User, Review
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 # Create your views here.
@@ -51,9 +51,26 @@ def CreateReview(request):
     if request.method == 'POST':
         form = CreateReviewForm(request.POST)
         if form.is_valid():
-            # TODO: authenticate user and redirect to home page
-            pass
+            product_name = form.cleaned_data["product_name"]
+            content = form.cleaned_data["content"]
+            punctuation = form.cleaned_data["punctutation"]
+            print(punctuation)
+            review = Review(product_name=product_name, content=content, punctuation=punctuation)
+            review.save()
+            last_five_objects = Review.objects.order_by('-id')[:5]
+            return render(request, 'reviews/showReview.html', {'reviews': last_five_objects})
+            
     else:
         form = CreateReviewForm()
     return render(request, 'reviews/CreateReview.html', {'form': form})
 
+
+def ShowReviews(request):
+        last_five_objects = Review.objects.order_by('-id')[:5]
+        return render(request, 'reviews/showReview.html', {'reviews': last_five_objects})
+
+
+def DeleteReview(request, review_id):
+    review = Review.objects.filter(id=review_id)
+    review.delete()
+    return redirect('/ShowReviews/')

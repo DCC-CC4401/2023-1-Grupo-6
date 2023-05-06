@@ -22,13 +22,14 @@ class RegisterForm(forms.Form):
 
 
 class CreateReviewForm(forms.Form):
-    CATEGORIES=(
-        ('1', 'Comida'),
-        ('2','Hoteles'),
-        ('3','Computadores'),
-    )
+    product_name = forms.CharField(label="Nombre del Producto", required=True,)
+    content = forms.CharField(label='Haz tu reseña...', widget=forms.Textarea, max_length=500)
+    CATEGORIES=[
+       (1, "ONE_STAR"),
+       (2, "TWO_STARS"),
+       (3, "THREE_STARS"),
+       (4, "FOUR_STARS"),
+       (5, "FIVE_STARS"),
+    ]
+    punctutation = forms.ChoiceField(label="Puntuacion", choices=CATEGORIES)
     
-    review_title=forms.CharField(label="Nombre del producto", max_length=50)
-    main_text=forms.CharField(label="Contenido de la reseña",max_length=300)
-    category=forms.ChoiceField(choices=CATEGORIES)
-    #punctuation=

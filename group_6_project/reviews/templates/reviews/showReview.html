@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Created Review</title>
+</head>
+<body>
+
+    {% block content %}
+    {% for obj in reviews %}
+    <div>
+        <p>Object ID: {{ obj.id }}</p>
+        <p>Attribute 1: {{ obj.product_name }}</p>
+        <p>Attribute 2: {{ obj.content }}</p>
+        <p>Attribute 3: {{ obj.punctuation }}</p>
+        <form action="{% url 'delete' obj.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="{{obj.id}}">
+        </form>
+    </div>
+{% endfor %}
+    {% endblock %}
+    
+</body>
+</html>
