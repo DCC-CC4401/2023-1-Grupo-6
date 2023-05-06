@@ -14,7 +14,7 @@ def Login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('/createReview/')
+                return redirect('/inicio/')
             else:
                 form.add_error(None, 'Invalid username or password')
     else:
@@ -74,3 +74,22 @@ def DeleteReview(request, review_id):
     review = Review.objects.filter(id=review_id)
     review.delete()
     return redirect('/ShowReviews/')
+
+def GoCreateReview(request):
+    return redirect('/createReview/')
+
+def GoReviews(request):
+    return redirect('/ShowReviews/')
+
+def GoLogin(request):
+    return redirect('/login/')
+
+def GoRegister(request):
+    return redirect('/register_user/')
+
+def Inicio(request):
+    return render(request, 'reviews/Inicio.html')
+
+def LogOut(request):
+    logout(request)
+    return redirect('/inicio/')
