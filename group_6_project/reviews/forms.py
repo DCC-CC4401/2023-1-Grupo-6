@@ -21,15 +21,19 @@ class RegisterForm(forms.Form):
     repeat_password = forms.CharField(widget=forms.PasswordInput())
 
 
+with open('reviews/assets/categories.json', 'r') as f:
+            categories = json.load(f)
+
 class CreateReviewForm(forms.Form):
     product_name = forms.CharField(label="Nombre del Producto", required=True,)
     content = forms.CharField(label='Haz tu reseña...', widget=forms.Textarea, max_length=500)
-    CATEGORIES=[
+    category = forms.ChoiceField(label='Select a country', choices=[(category['id'], category['name']) for category in categories],  required=True)
+    PUNCTUATIONS=[
        (1, "ONE_STAR"),
        (2, "TWO_STARS"),
        (3, "THREE_STARS"),
        (4, "FOUR_STARS"),
        (5, "FIVE_STARS"),
     ]
-    punctutation = forms.ChoiceField(label="Puntuacion", choices=CATEGORIES)
+    punctutation = forms.ChoiceField(label="Puntuacion", choices=PUNCTUATIONS)
     

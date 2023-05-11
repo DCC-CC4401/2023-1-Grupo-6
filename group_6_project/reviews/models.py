@@ -35,14 +35,14 @@ class User(AbstractUser):
 # Review representa una reseña de un producto que incluye información como el nombre del producto, el 
 # contenido de la reseña y la puntuación.
 class Review(models.Model):  # Todolist able name that inherits models.Model
-    # Campo de caracteres, esperamos que contenga las categorías a las que puede pertenecer el producto 
-    # categoria = models.ForeignKey(categories, default="general", on_delete=models.CASCADE)  
     # Campo de caracteres (máximo 100) que almacena el nombre del producto.
     product_name = models.CharField(max_length=100)# autodesc
+    # Campo de caracteres, esperamos que contenga las categorías a las que puede pertenecer el producto 
+    category = models.CharField(max_length=50,  blank=True, null=True)
     # Campo de texto  que almacena el contenido de la reseña, con una longitud máxima de 500 caracteres.
     content =	models.TextField(max_length=500)# donde se obtuvo, es un alimento, herramienta, etc. como se utiliza, precio
     # Campo de fecha. Contiene la fecha en que se creó la reseña
-   #  creation_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))# autodesc
+    creation_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))# autodesc
 
    # Puntuaciones que puede tener una reseña
     CATEGORIES = [
@@ -81,7 +81,7 @@ class Comments(models.Model):
     id_review = models.ForeignKey(Review, default="general", on_delete=models.CASCADE)
     username = models.ForeignKey(User, default="general", on_delete=models.CASCADE)
     creation_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))# autodesc
-    content =	models.TextField(max_length=500)
+    content =	models.TextField(max_length=500, null=False, blank=False, default="No comment")
 
 
    
