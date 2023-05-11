@@ -36,6 +36,9 @@ def Login(request):
         form = LogInForm()
     return render(request, 'reviews/LogIn.html', {'form': form})
 
+
+
+
 def register_user(request):
     if request.method == 'GET': #Si estamos cargando la página}
         form = RegisterForm()

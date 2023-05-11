@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Created Review</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'reviews/styles.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous"></head>
+    <link rel="stylesheet" type="text/css" href="{% static 'reviews/styles.css' %}">
 
 </head>
-<body>
+<body class="container morado-oscuro">
     {% block content %}
-    <nav class="navbar-expand">
+    <nav class="navbar-expand" > <!-- style="position: fixed; z-index: 100; width: 100%;" -->
         <div class="p-4 morado-oscuro  container-fluid">
           <div class="row row-cols-auto text-center">
             <div class="col-2">
@@ -45,27 +45,19 @@
         </div>
       </nav>
 
-
+      <div class="block">
     {% for obj in reviews %}
 
-    <!-- <div class="card" style="width: 18rem;">
-      <div class="card-header">
-        {{ obj.product_name }}
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{ obj.content }}</li>
-        <li class="list-group-item">{{ obj.punctuation }}</li>
-        <li class="list-group-item">{{ obj.category }}</li>
-      </ul>
-    </div> -->
-
-    <div class="card">
+    <div class="card borde morado-claro">
       <h5 class="card-header">{{ obj.product_name }}</h5>
-      <div class="card-body jumbotron">
+      <div class="card-body">
         <h5 class="card-title">{{ obj.category }}</h5>
         <p class="card-text">{{ obj.content }}</p>
         <p class="card-text">{{ obj.punctuation }}</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <form action="{% url 'delete' obj.id %}" method="post">
+          {% csrf_token %}
+          <input class="btn btn-primary" type="submit" value="Delete">
+      </form>
       </div>
     </div>
     <br>
@@ -79,11 +71,12 @@
         <p>Puntuación: {{ obj.punctuation }}</p>
         <form action="{% url 'delete' obj.id %}" method="post">
             {% csrf_token %}
-            <input type="submit" value="{{obj.id}}">
+            <input class="btn btn-primary" type="submit" value="{{obj.id}}">
         </form>
     </div>
 </div> -->
 {% endfor %}
+</div>
     {% endblock %}
     
 </body>
