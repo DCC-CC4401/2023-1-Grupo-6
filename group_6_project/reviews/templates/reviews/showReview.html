@@ -54,9 +54,11 @@
         <h5 class="card-title">{{ obj.category }}</h5>
         <p class="card-text">{{ obj.content }}</p>
         <p class="card-text">{{ obj.punctuation }}</p>
+        {% if user.id == obj.author_nickname.id %}
         <form action="{% url 'delete' obj.id %}" method="post">
           {% csrf_token %}
           <input class="btn btn-primary" type="submit" value="Delete">
+          {%endif%}
       </form>
       </div>
     </div>

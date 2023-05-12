@@ -9,12 +9,10 @@ from django.contrib.auth.models import AbstractUser
 
 
 # Modelo personalizado de usuario llamado User que hereda de AbstractUser. El modelo User incluye 
-# tres campos adicionales: birthdate, password y country.
+# tres campos adicionales: birthdate y country.
 class User(AbstractUser):
    # Tipo fecha. Con null=True y blank=True puede tener su espacio vacío o un nulo en la bdd.
    birthdate = models.DateField(null=True, blank=True)
-   # Campo de carácteres. Máximo de 50 carácteres.
-   password = models.CharField(max_length=50)
    # Campo de carácteres. Tiene largo máximo de 50 carácteres, puede estar vacío o ser NULL en la bdd.
    country = models.CharField(max_length=50,  blank=True, null=True)
 
@@ -59,7 +57,7 @@ class Review(models.Model):  # Todolist able name that inherits models.Model
       # Campo de enteros. Contiene la cantidad de "me gusta" que ha recibido de otros usuarios
    #  dislikes = models.IntegerField(null=True, default=0)
 
-   #  author_nickname =  models.ForeignKey(User, default="general", on_delete=models.CASCADE)# autodesc
+    author_nickname =  models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)# autodesc
 
 # Modelo que hereda de la clase Model del módulo models de Django. Tiene los campos "id_reseña" y "username", 
 # para tener almacenado a qué username corresponde qué reseña

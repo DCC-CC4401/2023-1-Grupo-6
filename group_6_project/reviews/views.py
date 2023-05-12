@@ -48,7 +48,6 @@ def register_user(request):
      #Tomar los elementos del formulario que vienen en request.POST
         # TODO: authenticate user and redirect to home page
         form = RegisterForm(request.POST)
-        print(form)
         if form.is_valid():
             first_name = form.cleaned_data.get('first_name') 
             last_name = form.cleaned_data.get('last_name') 
@@ -68,12 +67,12 @@ def register_user(request):
 def CreateReview(request):
     if request.method == 'POST':
         form = CreateReviewForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and request.user.is_authenticated:
             product_name = form.cleaned_data["product_name"]
             content = form.cleaned_data["content"]
             category = form.cleaned_data["category"]
             punctuation = form.cleaned_data["punctutation"]
-            review = Review(product_name=product_name, category=category, content=content, punctuation=punctuation)
+            review = Review(product_name=product_name, category=category, content=content, punctuation=punctuation, author_nickname=request.user)
             review.save()
             last_five_objects = Review.objects.order_by('-id')[:5]
             return render(request, 'reviews/showReview.html', {'reviews': last_five_objects})
