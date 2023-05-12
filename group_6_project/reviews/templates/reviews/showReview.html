@@ -51,7 +51,13 @@
     <div class="card borde morado-claro">
       <h5 class="card-header">{{ obj.product_name }}</h5>
       <div class="card-body">
-        <h5 class="card-title">{{ obj.category }}</h5>
+
+        {% for category in categories %}
+          {% if category.id == obj.category  %}
+          <h5 class="card-title">{{ category.name }}</h5>
+          {% endif %}
+        {% endfor %}
+
         <p class="card-text">{{ obj.content }}</p>
         <p class="card-text">{{ obj.punctuation }}</p>
         {% if user.id == obj.author_nickname.id %}

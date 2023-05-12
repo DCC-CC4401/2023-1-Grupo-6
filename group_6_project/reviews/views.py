@@ -3,6 +3,7 @@ from .forms import LogInForm, RegisterForm, CreateReviewForm
 from reviews.models import User, Review
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
+import json
 # Create your views here.
 
 # Esta función maneja el proceso de log in del usuario.
@@ -61,8 +62,9 @@ def register_user(request):
         
      #Crear el nuevo usuario
     
-     #Redireccionar la página /tareas
-     #return HttpResponseRedirect('/tareas')
+   
+with open('reviews/assets/categories.json', 'r') as f:
+            categories = json.load(f)
 
 def CreateReview(request):
     if request.method == 'POST':
@@ -74,8 +76,7 @@ def CreateReview(request):
             punctuation = form.cleaned_data["punctutation"]
             review = Review(product_name=product_name, category=category, content=content, punctuation=punctuation, author_nickname=request.user)
             review.save()
-            last_five_objects = Review.objects.order_by('-id')[:5]
-            return render(request, 'reviews/showReview.html', {'reviews': last_five_objects})
+            return redirect('/ShowReviews/')
             
     else:
         form = CreateReviewForm()
@@ -84,7 +85,7 @@ def CreateReview(request):
 
 def ShowReviews(request):
         last_five_objects = Review.objects.order_by('-id')[:5]
-        return render(request, 'reviews/showReview.html', {'reviews': last_five_objects})
+        return render(request, 'reviews/showReview.html', {'reviews': last_five_objects, 'categories': categories})
 
 
 def DeleteReview(request, review_id):

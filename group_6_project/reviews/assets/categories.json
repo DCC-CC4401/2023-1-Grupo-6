@@ -1,5 +1,3 @@
-Claro, aquí está la versión en español del archivo .json:
-
 [
   {
     "id": "1",
@@ -7,7 +5,7 @@ Claro, aquí está la versión en español del archivo .json:
   },
   {
     "id": "2",
-    "name": "Electrónicos"
+    "name": "Electronicos"
   },
   {
     "id": "3",
@@ -31,7 +29,7 @@ Claro, aquí está la versión en español del archivo .json:
   },
   {
     "id": "8",
-    "name": "Música y Películas"
+    "name": "Musica y Peliculas"
   },
   {
     "id": "9",
