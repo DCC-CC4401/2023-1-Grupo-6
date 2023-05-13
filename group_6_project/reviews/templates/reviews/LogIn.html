@@ -1,21 +1,102 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Iniciar Sesión</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous"></head>
+    <link rel="stylesheet" type="text/css" href="{% static 'reviews/styles.css' %}">
 </head>
 <body>
+    <nav class="navbar-expand fixed-top" > <!-- style="position: fixed; z-index: 100; width: 100%;" -->
+        <div class="p-4 morado-oscuro container-fluid">
+          <div class="row row-cols-auto text-center">
+            <!-- {% if user.is_authenticated %}
+            <div class="col-3">
+              <a class="text-white navbar-brand" href="{% url 'ShowReviews' %}">Nombre appweb</a>
+            </div>
+            {%else%}  -->
+            <div class="col-2">
+                <a class="text-white navbar-brand" href="{% url 'ShowReviews' %}">Nombre appweb</a>
+              </div>
+            <!-- {%endif%} -->
+              <div class="col-2">
+                <a class="text-white nav-link" href="{% url 'ShowReviews' %}">Inicio</a>
+              </div>
+              <div class="col-2">
+                  <a class="text-white nav-link" href="{% url 'CreateReview' %}">Crear reseña</a>
+              </div>
+              <div class="col-2">
+                <a class="text-white nav-link" href="{% url 'myReviews' %}">Mis reseñas</a>
+              </div>
+              <!-- {% if user.is_authenticated %}
+            <div class="col-3">
+                <a class="text-white nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+              </div>
+            {%else%}   -->
 
-    {% block content %}
+            <div class="col-2">
+              <a class="text-white nav-link" href="{% url 'register_user' %}">Registrarse</a>
+            </div>
+            <div class="col-2">
+                <a class="text-white nav-link border border-2 border-light rounded-pill" href="{% url 'login' %}">Iniciar sesión</a>
+              </div>
+            <!-- {%endif%} -->
+          </div>
+        </div>
+      </nav>
+      <div class="container-fluid min-vh-100 contenido">
+        <div class="row row-cols-auto">
+          <div class="col-12 bg-light">
+            <div class="container-fluid">
+        <div class="row row-cols-auto min-vh-100">
+          <div class="col-3">
+          </div>
+          <div class="col-6">
+            <div class="pt-5 pb-1 fs-1 text-center">Inicio de sesión</div>
+            <div class="row row-cols-1 mx-5 my-5 px-4 borde morado-claro py-4">
+              <div class="col text-center mb-2 p-3">
+                <img src="..." class="bg-secondary rounded-circle img-fluid p-5">
+              </div>
+              <div class="col">
+                <form method="post">
+                    {% csrf_token %}
+                <div class="row">
+                <div class="mb-3 pt-3">
+                  {{ form.nick_name }}
+                </div>
+                <div class="mb-3 pt-1">
+                  {{ form.password }}
+                </div>
+              </div>
+              <!-- <div class="form-check pt-2">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Recordarme
+                </label> 
+              </div> -->
+              <div class="col text-center justify-content-center">
+                <div class="text-center my-3"><a href="{% url 'register_user' %}"> ¿No tienes cuenta? Regístratre</a></div>
+                <button type="submit" class="btn mb-3 text-white morado-oscuro">Iniciar Sesión</button>
+              </div></form>
+            </div>
+          </div>
+          <div class="col-2">
+          </div>    
+      </div>
+          </div>
+        </div>
+    </div>
+    <!-- {% block content %}
     <h2>Login</h2>
         <form method="post">
             {% csrf_token %}
             {{ form }}
             <button type="submit">Submit</button>
         </form>
-    {% endblock %}
+    {% endblock %} -->
     
 </body>
 </html>

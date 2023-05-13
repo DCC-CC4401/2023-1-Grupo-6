@@ -1,8 +1,6 @@
-.vacio {
-
+/*.vacio{
 }
-
-.block {
+  .block {
     display:block;
     width:100%;
     border:none;
@@ -11,8 +9,14 @@
     font-size:large;
     cursor:pointer;
     text-align:center; 
-}
+} */
 
+.borde {
+      border-radius: 20px;
+      border-style: solid;
+      border-color: #452547;
+      border-width: thick;
+    }
 
 .morado-oscuro {
     background-color:#452547;
@@ -23,12 +27,21 @@
 .contenido {
     padding-top:88px;
 }
+.contenido2 {
+    margin-top:25px;
+}
 .borde {
     border-radius: 20px;
     border-style: solid;
     border-color: #452547;
     border-width: thick;
 }
+.borde2 {
+      border-radius: 100px;
+      border-style: solid;
+      border-color: #452547;
+      border-width: thick;
+    }
 .titulo-reseña{
     font-size:30px;
 }

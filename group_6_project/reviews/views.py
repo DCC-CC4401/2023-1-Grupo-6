@@ -107,6 +107,12 @@ def ShowReviews(request):
         last_five_objects = Review.objects.order_by('-id')[:5]
         return render(request, 'reviews/showReview.html', {'reviews': last_five_objects, 'categories': categories})
 
+# Se dirige al template showReview.html donde se cargan las últimas 5 reviews
+def ShowMyReviews(request):
+        # Se recuperan las 5 últimas reseñas
+        last_fifteen_objects = Review.objects.order_by('-id')[:15]
+        return render(request, 'reviews/myReviews.html', {'reviews': last_fifteen_objects, 'categories': categories})
+
 # Se borra la Review
 def DeleteReview(request, review_id):
     # Recupera la review con id "review_id"
@@ -131,6 +137,10 @@ def GoLogin(request):
 # Redirige a '/register_user/'
 def GoRegister(request):
     return redirect('/register_user/')
+
+# Renderiza el html de inicio
+def myReviews(request):
+    return render(request, 'reviews/myReviews.html')
 
 # Renderiza el html de inicio
 def Inicio(request):

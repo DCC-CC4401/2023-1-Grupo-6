@@ -1,14 +1,111 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="static/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-   <meta charset="UTF-8">
-   <title>Registro</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous"></head>
+    <link rel="stylesheet" type="text/css" href="{% static 'reviews/styles.css' %}">
+</head>
 <body>
-   <h1> Registro </h1>
+    <nav class="navbar-expand fixed-top" > <!-- style="position: fixed; z-index: 100; width: 100%;" -->
+        <div class="p-4 morado-oscuro container-fluid">
+          <div class="row row-cols-auto text-center">
+            <!-- {% if user.is_authenticated %}
+            <div class="col-3">
+              <a class="text-white navbar-brand" href="{% url 'ShowReviews' %}">Nombre appweb</a>
+            </div>
+            {%else%}  -->
+            <div class="col-2">
+                <a class="text-white navbar-brand" href="{% url 'ShowReviews' %}">Nombre appweb</a>
+              </div>
+            <!-- {%endif%} -->
+              <div class="col-2">
+                <a class="text-white nav-link" href="{% url 'ShowReviews' %}">Inicio</a>
+              </div>
+              <div class="col-2">
+                  <a class="text-white nav-link" href="{% url 'CreateReview' %}">Crear reseña</a>
+              </div>
+              <div class="col-2">
+                <a class="text-white nav-link" href="{% url 'myReviews' %}">Mis reseñas</a>
+              </div>
+              <!-- {% if user.is_authenticated %}
+            <div class="col-3">
+                <a class="text-white nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+              </div>
+            {%else%}   -->
+
+            <div class="col-2">
+              <a class="text-white nav-link border border-2 border-light rounded-pill" href="{% url 'register_user' %}">Registrarse</a>
+            </div>
+            <div class="col-2">
+                <a class="text-white nav-link" href="{% url 'login' %}">Iniciar sesión</a>
+              </div>
+            <!-- {%endif%} -->
+          </div>
+        </div>
+      </nav>
+      <div class="container-fluid min-vh-100 contenido">
+        <div class="row row-cols-auto">
+          <div class="col-12 bg-light">
+            <div class="container-fluid">
+        <div class="row row-cols-auto min-vh-100">
+          <div class="col-3">
+          </div>
+          <div class="col-6">
+            <div class="pt-5 pb-1 fs-1 text-center">Registro</div>
+            <div class="row row-cols-1 mx-5 my-5 px-4 borde morado-claro py-2">
+              <div class="col text-center mb-2 p-3">
+                <img src="..." class="bg-secondary rounded-circle img-fluid p-5">
+              </div>
+              <div class="col">
+                <form method="post">
+                    {% csrf_token %}
+                <div class="row">
+                  <div class="col mb-3">
+                    {{ form.first_name }}
+                  </div>
+                  <div class="col mb-3">
+                    {{ form.last_name }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6 mb-2">
+                    {{ form.country }}
+                  </div>
+                  <div class="col-6 mb-2">
+                    {{ form.birth_date }}
+                </div>
+                <div class="mb-2 pt-1">
+                  {{ form.email }}
+                </div>
+                <div class="mb-2 pt-1">
+                  {{ form.username }}
+                </div>
+                <div class="mb-2 pt-1">
+                  {{ form.password }}
+                </div>
+                <div class="pt-1">
+                  {{ form.repeat_password }}
+                </div>
+              </div>
+              <div class="col text-center justify-content-center">
+                <div class="text-center my-3"><a href="{% url 'login' %}"> ¿Ya tienes cuenta? Iniciar sesión </a></div>
+                <button type="submit" class="btn mb-3 text-white morado-oscuro">Crear cuenta</button>
+              </div></form>
+            </div>
+          </div>
+          <div class="col-2">
+          </div>    
+      </div>
+          </div>
+        </div>
+    </div>
+   <!-- <h1> Registro </h1>
    <form method="post">
-       {% csrf_token %}
+       {% csrf_token %} -->
        <!-- <div class="form-group">
            <label for="nombre_usuario">Nombre</label>
            <input type="text" class="form-control" id=nombre_usuario name="nombre" required>
@@ -28,10 +125,10 @@
             <label for="apodo">Apodo</label>
             <input type="text" class="form-control" id="apodo" name="apodo" required>
         </div> -->
-        {{ form }}
+        <!-- {{ form }}
     <br>
-        <button type="submit" class="block">Crear usuario</button>
-   </form>
+        <button type="submit" class="block btn morado-oscuro text-white">Crear usuario</button>
+   </form> -->
 </body>
 </head>
 </html>
