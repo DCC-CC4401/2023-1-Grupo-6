@@ -107,15 +107,20 @@
                     <div class="row text-center">
                       <div class="col-4">
                       </div>  
+
                       <div class="col-2">
-                        <button type="button" class="px-2 btn text-white morado-oscuro">Modificar</button>
-                      </div>
+                        <form action="{% url 'modify' obj.id %}" method="post">
+                          {% csrf_token %}
+                          <input class="px-2 btn text-white morado-oscuro" type="submit" value="Modificar">
+                        </form>
+                        <a class="text-white navbar-brand" href="{% url 'modify' obj.id %}">AAAAAA</a>
+                      </div>  
                       <div class="col-2">
                         <form action="{% url 'delete' obj.id %}" method="post">
                           {% csrf_token %}
-                          <input class="btn btn-danger" type="submit" value="Delete">
-                          {%endif%}
+                          <input class="btn btn-danger" type="submit" value="Eliminar">
                         </form>
+                          {%endif%}
                       </div>  
                       <div class="col-4">
                       </div>  

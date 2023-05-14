@@ -28,11 +28,11 @@ class CreateReviewForm(forms.Form):
     content = forms.CharField(label='Haz tu reseña...', widget=forms.Textarea(attrs={'placeholder':'Haz tu reseña...', 'class': 'form-control'}), max_length=500)
     category = forms.ChoiceField(label='Select a country', widget=forms.Select(attrs={'class': 'form-select text-muted'}), choices=[(category['id'], category['name']) for category in categories],  required=True)
     PUNCTUATIONS=[
-       (1, "ONE_STAR"),
-       (2, "TWO_STARS"),
-       (3, "THREE_STARS"),
-       (4, "FOUR_STARS"),
-       (5, "FIVE_STARS"),
+       ("1", "ONE_STAR"),
+       ("2", "TWO_STARS"),
+       ("3", "THREE_STARS"),
+       ("4", "FOUR_STARS"),
+       ("5", "FIVE_STARS"),
     ]
-    punctutation = forms.ChoiceField(label="Puntuacion", widget=forms.Select(attrs={'class': 'form-select text-muted'}),choices=PUNCTUATIONS)
+    punctuation = forms.ChoiceField(label="Puntuacion", widget=forms.Select(attrs={'class': 'form-select text-muted'}),choices=PUNCTUATIONS)
     

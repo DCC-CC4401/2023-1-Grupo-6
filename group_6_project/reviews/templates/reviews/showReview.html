@@ -109,9 +109,9 @@
                     <form action="{% url 'delete' obj.id %}" method="post">
                       {% csrf_token %}
                       <input class="btn btn-danger" type="submit" value="Delete">
+                    </form>
                       {%endif%}
 
-                  </form>
                   </div>
                 </div>
                 {% endfor %}

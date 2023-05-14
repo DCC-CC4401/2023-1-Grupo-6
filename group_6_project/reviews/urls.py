@@ -9,6 +9,7 @@ urlpatterns = [
     path('ShowReviews/', views.ShowReviews, name='ShowReviews'),
     path('delete/<review_id>',views.DeleteReview,name='delete'),
     path('inicio/',views.Inicio,name="inicio/"),
-    path('myReviews/',views.ShowMyReviews,name='myReviews')
-    
+    path('myReviews/',views.ShowMyReviews,name='myReviews'),
+    path('modify/<review_id>',views.ModifyReview,name='modify'),
+    path('modifiedReview/<review_id>',views.ModifiedReview,name='modifiedReview'),
 ]         
