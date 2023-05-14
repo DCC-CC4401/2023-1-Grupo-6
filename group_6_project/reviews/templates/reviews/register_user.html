@@ -47,10 +47,10 @@
           </div>
         </div>
       </nav>
-      <div class="container-fluid min-vh-100 contenido">
+      <div class="container-fluid min-vh-100 pt-5 contenido">
         <div class="row row-cols-auto">
           <div class="col-12 bg-light">
-            <div class="container-fluid">
+            <div class="container-fluid pt-5">
         <div class="row row-cols-auto min-vh-100">
           <div class="col-3">
           </div>
@@ -58,7 +58,13 @@
             <div class="pt-5 pb-1 fs-1 text-center">Registro</div>
             <div class="row row-cols-1 mx-5 my-5 px-4 borde morado-claro py-2">
               <div class="col text-center mb-2 p-3">
-                <img src="..." class="bg-secondary rounded-circle img-fluid p-5">
+                <div class="row row-cols-auto">
+                  <div class="col-4"></div>
+                  <div class="col-4">
+                    <img src="{% static 'reviews/user.png' %}" class="rounded-circle img-fluid">
+                  </div>
+                  <div class="col-4"></div>
+                </div> 
               </div>
               <div class="col">
                 <form method="post">

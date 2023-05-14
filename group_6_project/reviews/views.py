@@ -80,42 +80,44 @@ with open('reviews/assets/categories.json', 'r') as f:
 #     y lo redirige a la URL '/ShowReviews/' si todo se realiza exitosamente.
 #     Si es un GET request el que se recibe, al usuario se le presenta un formulario de registro para llenar.
 def CreateReview(request):
-    # Si es un método POST, se recogen los datos y se agrega una review al usuario
-    if request.method == 'POST':
-        form = CreateReviewForm(request.POST)
-        # Si los datos son válidos según el formulario y el usuario está ingresado
-        if form.is_valid() and request.user.is_authenticated:
-            product_name = form.cleaned_data["product_name"] # Nombre del producto
-            content = form.cleaned_data["content"] # Contenido de la review
-            category = form.cleaned_data["category"] # Categoría
-            punctuation = form.cleaned_data["punctutation"] # Puntuación 
-            # Se crea la Review
-            review = Review(product_name=product_name, category=category, content=content, punctuation=punctuation, author_nickname=request.user)
-            # Guarda la Review
-            review.save()
-            # Redirige a '/ShowReviews/'
-            return redirect('/ShowReviews/')
-            
+    if request.user.is_authenticated:
+         # Si es un método POST, se recogen los datos y se agrega una review al usuario
+        if request.method == 'POST':
+            form = CreateReviewForm(request.POST)
+            # Si los datos son válidos según el formulario y el usuario está ingresado
+            if form.is_valid() and request.user.is_authenticated:
+                product_name = form.cleaned_data["product_name"] # Nombre del producto
+                content = form.cleaned_data["content"] # Contenido de la review
+                category = form.cleaned_data["category"] # Categoría
+                punctuation = form.cleaned_data["punctuation"] # Puntuación 
+                # Se crea la Review
+                review = Review(product_name=product_name, category=category, content=content, punctuation=punctuation, author_nickname=request.user)
+                # Guarda la Review
+                review.save()
+                # Redirige a '/ShowReviews/'
+                return redirect('/ShowReviews/')
+        else:
+            # Si es un método GET, se entrega un formulario para ser llenado
+            form = CreateReviewForm()
+        return render(request, 'reviews/CreateReview.html', {'form': form})
     else:
-        # Si es un método GET, se entrega un formulario para ser llenado
-        form = CreateReviewForm()
-    return render(request, 'reviews/CreateReview.html', {'form': form})
-
+            return redirect('/login/')
+    
 # Se dirige al template showReview.html donde se cargan las últimas 5 reviews
 def ShowReviews(request):
         # Se recuperan las 5 últimas reseñas
         last_five_objects = Review.objects.order_by('-id')[:5]
         return render(request, 'reviews/showReview.html', {'reviews': last_five_objects, 'categories': categories})
 
-# Se dirige al template showReview.html donde se cargan las últimas 5 reviews
+# Se dirige al template showMyReview.html donde se cargan las últimas 5 reviews
 def ShowMyReviews(request):
         print(request)
-        # Se recuperan las 5 últimas reseñas
+        # Se recuperan las reseñas del usuario
         if request.user.is_authenticated:
-            last_fifteen_objects = Review.objects.filter(author_nickname=request.user)
-            return render(request, 'reviews/myReviews.html', {'reviews': last_fifteen_objects, 'categories': categories})
-
-
+            user_objects = Review.objects.filter(author_nickname=request.user)
+            return render(request, 'reviews/myReviews.html', {'reviews': user_objects, 'categories': categories})
+        else: 
+            return redirect('/login/')
 
 # Se lleva a una página de modificación de la Review
 def ModifyReview(request, review_id):
@@ -156,14 +158,23 @@ def ModifiedReview(request, review_id):
             return redirect('/myReviews/')
      
 
-# Se borra la Review
-def DeleteReview(request, review_id):    
+# Se borra la Review desde ShowReviews
+def DeleteReviewSR(request, review_id):    
     # Recupera la review con id "review_id"
     review = Review.objects.filter(id=review_id)
     # Se borra ese objeto
     review.delete()
     # Se redirige a '/ShowReviews/'
     return redirect('/ShowReviews/')
+
+# # Se borra la Review desde myReviews
+# def DeleteReviewMR(request, review_id):    
+#     # Recupera la review con id "review_id"
+#     review = Review.objects.filter(id=review_id)
+#     # Se borra ese objeto
+#     review.delete()
+#     # Se redirige a '/myReviews/'
+#     return redirect('/myReviews/')
 
 # Redirige a '/createReview/'
 def GoCreateReview(request):
@@ -181,7 +192,7 @@ def GoLogin(request):
 def GoRegister(request):
     return redirect('/register_user/')
 
-# Renderiza el html de inicio
+# Renderiza el html de myReviews
 def myReviews(request):
     return render(request, 'reviews/myReviews.html')
 

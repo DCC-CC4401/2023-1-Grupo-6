@@ -25,7 +25,7 @@ with open('reviews/assets/categories.json', 'r') as f:
 
 class CreateReviewForm(forms.Form):
     product_name = forms.CharField(label="Nombre del Producto", required=True, widget=forms.TextInput(attrs={'placeholder':'Nombre del Producto', 'class': 'form-control'}))
-    content = forms.CharField(label='Haz tu reseña...', widget=forms.Textarea(attrs={'placeholder':'Haz tu reseña...', 'class': 'form-control'}), max_length=500)
+    content = forms.CharField(label='Haz tu reseña...', widget=forms.Textarea(attrs={'placeholder':'Haz tu reseña...', 'class': 'form-control h-50'}), max_length=500)
     category = forms.ChoiceField(label='Select a country', widget=forms.Select(attrs={'class': 'form-select text-muted'}), choices=[(category['id'], category['name']) for category in categories],  required=True)
     PUNCTUATIONS=[
        ("1", "ONE_STAR"),

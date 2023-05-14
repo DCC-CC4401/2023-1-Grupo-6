@@ -53,7 +53,7 @@
           <div class="col-2 morado-oscuro contenido2 py-3">
           <div class="h-100 border border-2 border-light">
             <div class="row p-5 justify-content-center"> 
-              <img src="..." class="bg-secondary rounded-circle img-fluid p-5">
+              <img src="{% static 'reviews/user.png' %}" class="rounded-circle img-fluid">
             </div>        
             <div class="row text-white text-center m-1">
               <div class="pb-2 fs-4">Mi perfil</div>
@@ -94,24 +94,31 @@
             {% for obj in reviews %}
                 
                 <div class="card borde morado-claro my-4">
-                  <h5 class="card-header">{{ obj.product_name }}</h5>
-                  <div class="card-body">
-            
+                  <div class="row row-cols-auto card-header mx-1">
+                    <div class="col-1 p-1 justify-content-center"> 
+                      <img src="{% static 'reviews/user.png' %}" class="rounded-circle img-fluid">
+                    </div>
+                    <h5 class="col-4 mt-3 h-100">{{ obj.author_nickname }}</h5>
+                    <!-- <div class="col-3"></div> -->
                     {% for category in categories %}
                       {% if category.id == obj.category  %}
-                      <h5 class="card-title">{{ category.name }}</h5>
+                      <h5 style="text-align: right;" class="col-7 h-100 mt-3 card-title justify-content-right">{{ category.name }}</h5>
                       {% endif %}
                     {% endfor %}
-            
+                  </div>        
+                                   
+                  <div class="card-body px-4">
+                    <h5 class="card-text">Producto: {{ obj.product_name }}</h5>
                     <p class="card-text">{{ obj.content }}</p>
-                    <p class="card-text">{{ obj.punctuation }}</p>
+                    <p class="card-text">Calificación: {{ obj.punctuation }}</p>
                     {% if user.id == obj.author_nickname.id %}
                     <form action="{% url 'delete' obj.id %}" method="post">
                       {% csrf_token %}
-                      <input class="btn btn-danger" type="submit" value="Delete">
+                      <div class="text-center">
+                        <input class="btn btn-danger" type="submit" value="Eliminar">
+                      </div>
                     </form>
                       {%endif%}
-
                   </div>
                 </div>
                 {% endfor %}

@@ -51,12 +51,12 @@
 
    
 
-    <div class="container-fluid min-vh-100 contenido pt-5">
+    <div class="container-fluid min-vh-100 contenido mt-4 pt-5">
         <div class="row row-cols-auto">
           <div class="col-2 morado-oscuro py-3">
-          <div class="h-100  border border-2 border-light">
+          <div class="h-100 border border-2 border-light">
             <div class="row p-5 justify-content-center"> 
-              <img src="..." class="bg-secondary rounded-circle img-fluid p-5">
+              <img src="{% static 'reviews/user.png' %}" class="rounded-circle img-fluid">
             </div>        
             <div class="row text-white text-center m-1">
               <div class="py-2 fs-4">Mi perfil</div>
@@ -74,14 +74,16 @@
           </div>
           </div>  
           <div class="col-10 bg-light">
-            <div class="container-fluid contenido">
+            <div class="container-fluid contenido pt-5">
         <div class="row row-cols-auto min-vh-100">
           <div class="col-2">
           </div>
           <div class="col-8 py-5">
-            <form method="post">
-                {% csrf_token %}
+            
+                
             <div class="row row-cols-1 borde morado-claro p-4">
+              <form style="height: 390px;" method="post">
+                {% csrf_token %}
               <div class="col fs-2">
                 Nueva reseña
               </div>
@@ -89,23 +91,25 @@
                 <div class="mb-3 pt-4">
                   {{ form.product_name }}
                 </div>
-                <div class="row">
+                <div style="height: 50%;" class="row">
                   <div class="col-6">
                     {{ form.category }}
                   </div>
                   <div class="col-6">
                     
                       <!-- <div class="col text-center"><p class="pt-3">Calificación:</a></div> -->
-                      {{ form.puncutation }}
+                      {{ form.punctuation }}
                   
                 </div>
-                <div class="mb-3 pt-3">
+                <div class="pt-3 text-center">
                   {{ form.content }}
+                  <button type="submit" class="btn text-white mt-3 mb-0 morado-oscuro">Crear</button>
                 </div>
+                
               </div>
-              <div class="col text-center">
-                <button type="submit" class="btn text-white morado-oscuro">Crear</button>
-              </div>
+              <!-- <div class="col text-center">
+                <button type="submit" class="btn text-white mb-3 morado-oscuro">Crear</button>
+              </div>  -->
             </div></form>
           </div>
           <div class="col-2">
