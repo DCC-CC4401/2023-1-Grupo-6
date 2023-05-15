@@ -48,8 +48,9 @@
           </div>
         </div>
       </nav>
-      <div class="container-fluid min-vh-100 contenido pt-5">
+      <div id="Últimas_reseñas" class="bg-light container-fluid min-vh-100 contenido pt-5">
         <div class="row row-cols-auto">
+          {% if user.is_authenticated %}
           <div class="col-2 morado-oscuro contenido2 py-3">
           <div class="h-100 border border-2 border-light">
             <div class="row p-5 justify-content-center"> 
@@ -58,18 +59,21 @@
             <div class="row text-white text-center m-1">
               <div class="pb-2 fs-4">Mi perfil</div>
               <div class="container-fluid justify-content-center">
-                <div class="row row-cols-1">
-                  <div class="col">Nombre</div>
-                  <div class="col">Apellido</div>
-                  <div class="col">Usuario</div>
-                  <div class="col">Correo</div>
-                  <div class="col">Fecha de nacimiento</div>
-                  <div class="col">País</div>
+                <div style="font-size: 12px;" class="row row-cols-1">
+                  <div class="col mt-2">{{ user.first_name }}</div>
+                  <div class="col mt-2">{{ user.last_name }}</div>
+                  <div class="col mt-2">{{ user.username }}</div>
+                  <div class="col mt-2">{{ user.email }}</div>
+                  <div class="col mt-2">{{ user.birthdate }}</div>
+                  <div class="col mt-2">{{ user.country }}</div>
                 </div>
               </div>
             </div>
           </div>
-          </div>  
+          </div>
+          {%else%}
+          <div class="col-1 contenido2 py-3"></div>
+          {%endif%}
           <div class="col-10 bg-light">
             <div class="container-fluid contenido">
         <div class="row row-cols-auto min-vh-100">
@@ -122,8 +126,10 @@
                   </div>
                 </div>
                 {% endfor %}
-          <div class="col-2">
-          </div>    
+          <div class="col-2"></div>
+          {% if user.is_authenticated %}
+          <div class="col-1 bg-info"></div>
+          {%endif%}
       </div>
           </div>
         </div>
@@ -171,4 +177,13 @@
     {% endblock %}-->
     
 </body>
+<footer>
+  <div class="bg-transparent fixed-bottom">
+    <a class="btn rounded-circle morado-oscuro float-end m-3" href="#Últimas_reseñas">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="30" fill="white" class="bi bi-arrow-up" viewBox="0 0 17 15">
+        <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+      </svg>
+    </a>
+  </div>
+</footer>
 </html>
