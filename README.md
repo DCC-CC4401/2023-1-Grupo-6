@@ -20,13 +20,13 @@ $ python -m venv env
 3. Activar el ambiente virtual:
 * Windows:
 ```
-> auxiliar\Scripts\activate
+> env\Scripts\activate
 ```
 * Linux:
 ```
 $ source env\Scripts\activate
 ```
-4. Instalar librerías
+4. Instalar las siguientes librerías:
 * asgiref 3.6.0
 * Django 4.2
 * pytz 2020.1
@@ -50,23 +50,24 @@ $ python manage.py runserver
 ## Uso
 Para poder utilizar la aplicación debe haber realizado los pasos de instalación y tener el ambiente virtual activado.\
 \
-Debe entrar a entrar a http://127.0.0.1:8000/register donde podrá ver el formulario de registro de usuario, donde deberá crear una cuenta\
-\
-Una vez creada la cuenta será se rediccionará a la página de inicio de sesión http://127.0.0.1:8000/login/ de manera automática, donde deberá iniciar sesión con el username y contraseña que indicó en el formulario de registro\
-\
-Ahora que la sesión fue iniciada se rediccionará a la página http://127.0.0.1:8000/ShowReviews/ donde podrá ver las últimas 5 reseñas de otros usuarios\
-\
-Al hacer click en el botón Crear reseña se rediccionará a la página http://127.0.0.1:8000/ShowReviews/ donde verá el formulario de creación de reseña, y la podrá subir con el botón Crear\
-\
-Una vez subida, se le redireccionará nuevamente a la página de inicio donde aparecerá su reseña como la última que fue subida, esta tendrá un botón de Eliminar con el que puede eliminar la reseña recien creada si lo desea\
-\
-Haciendo click en mis reseñas se redirecciona a la página http://127.0.0.1:8000/myReviews/ donde aparecen sus reseñas creadas y puede modificarlas y eliminarlas\
-\
-Si hace click en el botón Modificar se redireccionará a http://127.0.0.1:8000/modify/56 donde podrá modificarla y volver a guardarla con el botón Guardar\
-\
-Si hace click en eliminar la reseña será eliminada y desaparecerá de la página de inicio\
-\
+Debe entrar a entrar a http://127.0.0.1:8000/register donde podrá ver el formulario de registro de usuario, donde deberá crear una cuenta
+![](images/image1.jpg)
+Una vez creada la cuenta será se rediccionará a la página de inicio de sesión http://127.0.0.1:8000/login/ de manera automática, donde deberá iniciar sesión con el username y contraseña que indicó en el formulario de registro
+![](images/image2.jpg)
+Ahora que la sesión fue iniciada se rediccionará a la página http://127.0.0.1:8000/ShowReviews/ donde podrá ver las últimas 5 reseñas de otros usuarios
+![](images/image3.jpg)
+Al hacer click en el botón Crear reseña se rediccionará a la página http://127.0.0.1:8000/ShowReviews/ donde verá el formulario de creación de reseña, y la podrá subir con el botón Crear
+![](images/image4.jpg)
+Una vez subida, se le redireccionará nuevamente a la página de inicio donde aparecerá su reseña como la última que fue subida, esta tendrá un botón de Eliminar con el que puede eliminar la reseña recien creada si lo desea
+![](images/image5.jpg)
+Haciendo click en mis reseñas se redirecciona a la página http://127.0.0.1:8000/myReviews/ donde aparecen sus reseñas creadas y puede modificarlas y eliminarlas
+![](images/image6.jpg)
+Si hace click en el botón Modificar se redireccionará a http://127.0.0.1:8000/modify/56 donde podrá modificarla y volver a guardarla con el botón Guardar
+![](images/image7.jpg)
+Si hace click en eliminar la reseña será eliminada y desaparecerá de la página de inicio
+![](images/image8.jpg)
 Al hacer click en Cerrar sesión desaparecerá la barra izquierda con los datos de su perfil y en lugar de Cerrar sesión aparecerá la opción Iniciar sesión
+![](images/image9.jpg)
 
 ## Autores
 * Josefina Labarca
