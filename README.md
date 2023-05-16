@@ -17,7 +17,7 @@ Pasos a seguir:
 ```
 $ python -m venv env
 ```
-3. Activar el ambiente virtual:\
+3. Activar el ambiente virtual:
 * Windows:
 ```
 > auxiliar\Scripts\activate
