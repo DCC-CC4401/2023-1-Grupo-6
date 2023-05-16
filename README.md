@@ -6,9 +6,11 @@ El sitio cuenta con una página de inicio de sesión, una página de registro de
 \
 Para registrarse, el usuario debe ingresar su nombre, apellido, país, fecha de nacimiento, un username único, su e-mail de registro y una contraseña que luego debe repetir por seguridad. Una vez registrado, será redireccionado a la página de inicio de sesión, donde puede iniciar sesíon con su username y contraseña. Con esto el usuario ya puede crear reseñas, ver otras reseñas y hacer comentarios. Para crear una nueva reseña debe ingresar el nombre del producto, el contenido de su reseña, la categoría a la que pertenece el producto y una puntuación en estrellas de 1 a 5. Una vez publicada, el autor de esta reseña puede modificarla o eliminarla cuando desee. Para crear un comentario, el usuario debe ingresar el comentario y publicarlo, el cual aparecerá junto a su username. También puede puntuar las reseñas de otros usuarios según si le gustan o no.
 
+## Requerimientos
+* Tener instalado Git
+* Tener instalado Python
+
 ## Instalación
-Para la instalación de este proyecto es necesario tener instalados git y python en su computador.\
-\
 Pasos a seguir:
 1. Clonar el repositorio en el directorio deseado
 2. Crear ambiente virtual con el siguiente comando:
@@ -39,6 +41,32 @@ $ python manage.py migrate
 $ python manage.py runserver
 ```
 
+## Directorios del proyecto
+Una vez clonado el repositorio el orden de los directorios debiera ser el siguiente:\
+\
+2023-1-Grupo-6\
+├───group-6-project\
+│   ├───group-6-project\
+│   ├───reviews\
+|   |   | __pycache__\
+|   |   | assets\
+|   |   | migrations\
+|   |   | static\
+|   |   | templates\
+|   |   | __init__.py\
+|   |   | admin.py\
+|   |   | apps.py\
+|   |   | forms.py\
+|   |   | models.py\
+|   |   | tests.py\
+|   |   | urls.py\
+|   |   | views.py\
+│   ├───db.sqlite3\
+│   ├───manage.py\
+├───.gitignore\
+├───README.md\
+└───requirements.txt\
+
 ## Uso
 Para poder utilizar la aplicación debe haber realizado los pasos de instalación y tener el ambiente virtual activado.\
 \
@@ -60,5 +88,9 @@ Si hace click en eliminar la reseña será eliminada y desaparecerá de la pági
 \
 Al hacer click en Cerrar sesión desaparecerá la barra izquierda con los datos de su perfil y en lugar de Cerrar sesión aparecerá la opción Iniciar sesión
 
-
-
+## Autores
+* Josefina Labarca
+* Gustavo Medel
+* Sebastián Mira
+* Daniela Moraga
+* Sergio Rojas
