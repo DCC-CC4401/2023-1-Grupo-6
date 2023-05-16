@@ -8,7 +8,7 @@ Para registrarse, el usuario debe ingresar su nombre, apellido, país, fecha de 
 
 ## Requerimientos
 * Tener instalado Git
-* Tener instalado Python
+* Tener instalado Python 3.10.3
 
 ## Instalación
 Pasos a seguir:
@@ -18,15 +18,21 @@ Pasos a seguir:
 $ python -m venv env
 ```
 3. Activar el ambiente virtual:\
-Windows:
+* Windows:
 ```
 > auxiliar\Scripts\activate
 ```
-Linux:
+* Linux:
 ```
 $ source env\Scripts\activate
 ```
-4. Instalar librerías:
+4. Instalar librerías
+* asgiref 3.6.0
+* Django 4.2
+* pytz 2020.1
+* sqlparse 0.4.3
+* tzdata 2023.3
+Pueden instalarse todas con el siguiente comando:
 ```
 $ pip install -r requirements.txt
 ```
@@ -68,3 +74,7 @@ Al hacer click en Cerrar sesión desaparecerá la barra izquierda con los datos 
 * Sebastián Mira
 * Daniela Moraga
 * Sergio Rojas
+
+## Recursos adicionales
+* [Tutoriales proporcionados por el curso](https://github.com/Aux-Ing-1)
+
