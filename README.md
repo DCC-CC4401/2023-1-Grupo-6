@@ -7,15 +7,15 @@ El sitio cuenta con una página de inicio de sesión, una página de registro de
 Para registrarse, el usuario debe ingresar su nombre, apellido, país, fecha de nacimiento, un username único, su e-mail de registro y una contraseña que luego debe repetir por seguridad. Una vez registrado, será redireccionado a la página de inicio de sesión, donde puede iniciar sesíon con su username y contraseña. Con esto el usuario ya puede crear reseñas, ver otras reseñas y hacer comentarios. Para crear una nueva reseña debe ingresar el nombre del producto, el contenido de su reseña, la categoría a la que pertenece el producto y una puntuación en estrellas de 1 a 5. Una vez publicada, el autor de esta reseña puede modificarla o eliminarla cuando desee. Para crear un comentario, el usuario debe ingresar el comentario y publicarlo, el cual aparecerá junto a su username. También puede puntuar las reseñas de otros usuarios según si le gustan o no.
 
 ## Instalación
-Para la instalación de este proyecto es necesario tener instalado git en su computador.\
+Para la instalación de este proyecto es necesario tener instalados git y python en su computador.\
 \
-Pasos a seguir:\
+Pasos a seguir:
 1. Clonar el repositorio en el directorio deseado
 2. Crear ambiente virtual con el siguiente comando:
 ```
 $ python -m venv env
 ```
-3. Activar el ambiente virtual:
+3. Activar el ambiente virtual:\
 Windows:
 ```
 > auxiliar\Scripts\activate
@@ -28,30 +28,37 @@ $ source env\Scripts\activate
 ```
 $ pip install -r requirements.txt
 ```
-5. Crear directorio migrations y base de datos:
+5. Crear directorio migrations y base de datos dentro del directorio del pryecto:
 ```
-$ python manage.py makemigrations todoapp categorias
+$ cd group_6_project
+$ python manage.py makemigrations reviews
 $ python manage.py migrate
 ```
 6. Ejecutar el servidor:
 ```
 $ python manage.py runserver
 ```
-7. Entrar a 127.0.0.1:8000/register
 
-### Models ###
--User
-Almacena info de los usuarios: username, nombre, apellido, contraseña, país, edad, email.
+## Uso
+Para poder utilizar la aplicación debe haber realizado los pasos de instalación y tener el ambiente virtual activado.\
+\
+Debe entrar a entrar a http://127.0.0.1:8000/register donde podrá ver el formulario de registro de usuario, donde deberá crear una cuenta\
+\
+Una vez creada la cuenta será se rediccionará a la página de inicio de sesión http://127.0.0.1:8000/login/ de manera automática, donde deberá iniciar sesión con el username y contraseña que indicó en el formulario de registro\
+\
+Ahora que la sesión fue iniciada se rediccionará a la página http://127.0.0.1:8000/ShowReviews/ donde podrá ver las últimas 5 reseñas de otros usuarios\
+\
+Al hacer click en el botón Crear reseña se rediccionará a la página http://127.0.0.1:8000/ShowReviews/ donde verá el formulario de creación de reseña, y la podrá subir con el botón Crear\
+\
+Una vez subida, se le redireccionará nuevamente a la página de inicio donde aparecerá su reseña como la última que fue subida, esta tendrá un botón de Eliminar con el que puede eliminar la reseña recien creada si lo desea\
+\
+Haciendo click en mis reseñas se redirecciona a la página http://127.0.0.1:8000/myReviews/ donde aparecen sus reseñas creadas y puede modificarlas y eliminarlas\
+\
+Si hace click en el botón Modificar se redireccionará a http://127.0.0.1:8000/modify/56 donde podrá modificarla y volver a guardarla con el botón Guardar\
+\
+Si hace click en eliminar la reseña será eliminada y desaparecerá de la página de inicio\
+\
+Al hacer click en Cerrar sesión desaparecerá la barra izquierda con los datos de su perfil y en lugar de Cerrar sesión aparecerá la opción Iniciar sesión
 
--Review
-Almacena info de las reviews: usuario creador, nombre del producto, categoría, contenido, puntuacion del creador,
-    likes, dislikes.
 
--Reviews_Username
-Almacena la info que conecta un usuario con sus reseñas: usuario creador, id_reseña
 
--ReviewLikes:
-Almacena la info que conecta un usuario con la reseña en la que votó: id_reseña, username, vote
-
--Comments:
-Almacena la info que conecta un usuario con la reseña en la que comentó: id_review, username, creation_date, content
