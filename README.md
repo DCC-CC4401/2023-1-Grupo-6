@@ -41,32 +41,6 @@ $ python manage.py migrate
 $ python manage.py runserver
 ```
 
-## Directorios del proyecto
-Una vez clonado el repositorio el orden de los directorios debiera ser el siguiente:\
-\
-2023-1-Grupo-6\
-├───group-6-project\
-│   ├───group-6-project\
-│   ├───reviews\
-|   |   | __pycache__\
-|   |   | assets\
-|   |   | migrations\
-|   |   | static\
-|   |   | templates\
-|   |   | __init__.py\
-|   |   | admin.py\
-|   |   | apps.py\
-|   |   | forms.py\
-|   |   | models.py\
-|   |   | tests.py\
-|   |   | urls.py\
-|   |   | views.py\
-│   ├───db.sqlite3\
-│   ├───manage.py\
-├───.gitignore\
-├───README.md\
-└───requirements.txt\
-
 ## Uso
 Para poder utilizar la aplicación debe haber realizado los pasos de instalación y tener el ambiente virtual activado.\
 \
