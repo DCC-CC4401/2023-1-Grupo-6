@@ -13,4 +13,6 @@ urlpatterns = [
     path('myReviews/',views.ShowMyReviews,name='myReviews'),
     path('modify/<review_id>',views.ModifyReview,name='modify'),
     path('modifiedReview/<review_id>',views.ModifiedReview,name='modifiedReview'),
+    path('myReviewsFilter/',views.filterMyReviews,name='filterMyReviews'),
+    path('AllReviewsFilter/',views.filterAllReviews,name='filterAllReviews'),
 ]         

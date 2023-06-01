@@ -81,9 +81,11 @@
             <div class="row p-2 mb-3">
               <div class="col"> 
                 <div class="col-6">
-                  <select class="form-select text-muted" placeholder="Categoría">
-                        <option selected>Filtrar por categoría</option> <!--Cambiar para que no saga como opción y si como texto -->
-                  </select>
+                  <form action="{% url 'filterMyReviews' %}" method="post">
+                    {% csrf_token %}
+                    {{filterForm.category}}
+                    <input class="btn btn-danger" type="submit" value="Filtrar">
+                  </form>
                 </div>
                 <div class="col-6"></div>
               </div>
@@ -114,11 +116,6 @@
                       </div>  
 
                       <div class="col-2">
-                        <form action="{% url 'modify' obj.id %}" method="post">
-                          {% csrf_token %}
-
-                          <!-- <input class="px-2 btn text-white morado-oscuro" type="submit" value="Modificar"> -->
-                        </form>
                         <a class="btn morado-oscuro text-white" href="{% url 'modify' obj.id %}">Modificar</a>
                       </div>  
                       <div class="col-2">

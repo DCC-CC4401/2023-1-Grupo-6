@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import LogInForm, RegisterForm, CreateReviewForm
+from .forms import LogInForm, RegisterForm, CreateReviewForm, FilterMyReviews, FilterAllReviews
 from reviews.models import User, Review
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
@@ -107,15 +107,16 @@ def CreateReview(request):
 def ShowReviews(request):
         # Se recuperan las 5 últimas reseñas
         last_five_objects = Review.objects.order_by('-id')[:5]
-        return render(request, 'reviews/showReview.html', {'reviews': last_five_objects, 'categories': categories})
+        filterForm = FilterAllReviews()
+        return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': last_five_objects, 'categories': categories})
 
 # Se dirige al template showMyReview.html donde se cargan las últimas 5 reviews
 def ShowMyReviews(request):
-        print(request)
         # Se recuperan las reseñas del usuario
         if request.user.is_authenticated:
             user_objects = Review.objects.filter(author_nickname=request.user)
-            return render(request, 'reviews/myReviews.html', {'reviews': user_objects, 'categories': categories})
+            filterForm = FilterMyReviews()
+            return render(request, 'reviews/myReviews.html', {'filterForm':filterForm, 'reviews': user_objects, 'categories': categories})
         else: 
             return redirect('/login/')
 
@@ -156,6 +157,42 @@ def ModifiedReview(request, review_id):
             review.save()
             # Redirige a '/myReviews/'
             return redirect('/myReviews/')
+        
+
+# Función que recibe una request, la cual tiene 1 parámetro: la categoría de las reseñas que se quieren mostrar en la página de 
+# Mis Reseñas. Se verifica que el usuario esté autenticado, y luego se procede a realizar el filtro. Se recoge el valor de la request,
+# se verifica que no sea nulo. En caso de que sea nulo, se vuelve a la página pues no hay filtro. En caso contrario, obtenemos las
+# reseñas del usuario cuyas categorías coincidan con el parámetro recogido.
+def filterMyReviews(request):
+     form = FilterMyReviews(request.POST)
+     if request.user.is_authenticated and form.is_valid():
+        category = form.cleaned_data["category"]
+        if category=="0":
+            return redirect('/myReviews/')
+        user_objects = Review.objects.filter(author_nickname=request.user, category=category)
+        filterForm = FilterMyReviews()
+        return render(request, 'reviews/myReviews.html', {'filterForm':filterForm, 'reviews': user_objects, 'categories': categories})
+     else: 
+            return redirect('/login/')
+     
+# Función que recibe una request, la cual tiene 2 parámetro: la categoría y un username de las reseñas que se quieren mostrar en la página de 
+# Últimas Reseñas. Se verifica que el usuario esté autenticado, y luego se procede a realizar el filtro. Se recoge el valor de la request,
+# se verifica que no sea nulo en caso de la categoría y que no sea el string vacío. En caso de que sea nulo y vacío, se vuelve a la página 
+# pues no hay filtro. En caso contrario, obtenemos las
+# reseñas del usuario cuyas categorías y usuario coincidan con los parámetros recogido.
+def filterAllReviews(request):
+     form = FilterAllReviews(request.POST)
+     if request.user.is_authenticated and form.is_valid():
+        category = form.cleaned_data["category"]
+        username=form.cleaned_data['username']
+        if category=="0" and username=="":
+            return redirect('/ShowReviews/')
+        valid_users = User.objects.filter(username = username)
+        user_objects = Review.objects.filter( category=category) #author_nickname = valid_users,
+        filterForm = FilterAllReviews()
+        return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': user_objects, 'categories': categories})
+     else: 
+            return redirect('/login/')
      
 
 # Se borra la Review desde ShowReviews
@@ -167,14 +204,6 @@ def DeleteReviewSR(request, review_id):
     # Se redirige a '/ShowReviews/'
     return redirect('/ShowReviews/')
 
-# # Se borra la Review desde myReviews
-# def DeleteReviewMR(request, review_id):    
-#     # Recupera la review con id "review_id"
-#     review = Review.objects.filter(id=review_id)
-#     # Se borra ese objeto
-#     review.delete()
-#     # Se redirige a '/myReviews/'
-#     return redirect('/myReviews/')
 
 # Redirige a '/createReview/'
 def GoCreateReview(request):

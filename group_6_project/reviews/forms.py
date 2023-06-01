@@ -36,3 +36,14 @@ class CreateReviewForm(forms.Form):
     ]
     punctuation = forms.ChoiceField(label="Puntuacion", widget=forms.Select(attrs={'class': 'form-select text-muted'}),choices=PUNCTUATIONS)
     
+class FilterMyReviews(forms.Form):
+        choices = [("0", "Todas las categorias")]
+        choices += [(category['id'], category['name']) for category in categories]
+        category = forms.ChoiceField(label='Select a country', widget=forms.Select(attrs={'class': 'form-select text-muted'}), choices=choices,  required=True)
+
+
+class FilterAllReviews(forms.Form):
+        username = forms.CharField(label="Autor reseña", required=True,widget=forms.TextInput(attrs={'placeholder':'Autor reseña', 'class': 'form-control'}))
+        choices = [("0", "Todas las categorias")]
+        choices += [(category['id'], category['name']) for category in categories]
+        category = forms.ChoiceField(label='Select a country', widget=forms.Select(attrs={'class': 'form-select text-muted'}), choices=choices,  required=True)

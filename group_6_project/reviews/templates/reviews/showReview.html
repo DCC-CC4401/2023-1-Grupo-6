@@ -82,17 +82,18 @@
           <div class="col-8">
             <div class="pb-1 fs-1">Últimas reseñas</div>
             <div class="row p-2 mb-3">
+              <form action="{% url 'filterAllReviews' %}" method="post">
+              {% csrf_token %}
               <div class="col"> 
                 <div class="input-group rounded">
-                  <input type="search" class="form-control rounded-start" placeholder="Filtrar por usuario"/>
-                  <button type="button" class="btn text-white morado-oscuro border-1 rounded-end">Buscar</button>              
+                  {{filterForm.username}}      
                 </div>
               </div>
               <div class="col">
-                <select class="form-select text-muted" placeholder="Categoría">
-                      <option selected>Filtrar por categoría</option> <!--Cambiar para que no saga como opción y si como texto -->
-                </select>
+                {{filterForm.category}}
+                    <input class="btn btn-danger" type="submit" value="Filtrar">
               </div>
+            </form>
             </div>
             
             {% for obj in reviews %}
