@@ -187,10 +187,24 @@ def filterAllReviews(request):
         username=form.cleaned_data['username']
         if category=="0" and username=="":
             return redirect('/ShowReviews/')
-        valid_users = User.objects.filter(username = username)
-        user_objects = Review.objects.filter( category=category) #author_nickname = valid_users,
-        filterForm = FilterAllReviews()
-        return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': user_objects, 'categories': categories})
+        
+        valid_users = User.objects.filter(username__icontains = username)
+        if category == "0":
+            objects = []
+            for usr in valid_users:
+                revs = Review.objects.filter(author_nickname = usr)
+                for rev in revs:
+                    objects += [rev] 
+            filterForm = FilterAllReviews()
+            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories})
+        else:
+            objects = []
+            for usr in valid_users:
+                revs = Review.objects.filter(author_nickname = usr, category=category)
+                for rev in revs:
+                    objects += [rev] 
+            filterForm = FilterAllReviews()
+            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories})
      else: 
             return redirect('/login/')
      
