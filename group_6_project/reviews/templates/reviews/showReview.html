@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'reviews/styles.css' %}">
 </head>
 <body>
-    <!-- {% block content %} -->
+    {% block content %} 
     <nav class="navbar-expand fixed-top" > <!-- style="position: fixed; z-index: 100; width: 100%;" -->
         <div class="p-4 morado-oscuro container-fluid">
           <div class="row row-cols-auto text-center">
@@ -95,7 +95,20 @@
               </div>
             </form>
             </div>
-            
+            {% if filtros %}
+              <div> Mostrando resultados para los filtros:</div>
+
+              {% if filtros.0 %}
+              <div> Nombre de usuario: {{filtros.0}} </div>
+              {% endif %}
+
+              {% for category in categories %}
+                      {% if category.id == filtros.1  %}
+                      <div>Categoría: {{category.name}}</div>
+                      {% endif %}
+                    {% endfor %}
+              
+            {% endif %}
             {% for obj in reviews %}
                 
                 <div class="card borde morado-claro my-4">
@@ -127,6 +140,10 @@
                   </div>
                 </div>
                 {% endfor %}
+
+                {% if not reviews %}
+                <div class="pb-1 fs-1"> No se encontraron resultados :(</div>
+                {% endif %}
           <div class="col-2"></div>
           {% if user.is_authenticated %}
           <div class="col-1 bg-info"></div>
@@ -135,48 +152,7 @@
           </div>
         </div>
     </div>
-      <!-- <div class="block">
-    {% for obj in reviews %}
-
-    <div class="card borde morado-claro">
-      <h5 class="card-header">{{ obj.product_name }}</h5>
-      <div class="card-body">
-
-        {% for category in categories %}
-          {% if category.id == obj.category  %}
-          <h5 class="card-title">{{ category.name }}</h5>
-          {% endif %}
-        {% endfor %}
-
-        <p class="card-text">{{ obj.content }}</p>
-        <p class="card-text">{{ obj.punctuation }}</p>
-        {% if user.id == obj.author_nickname.id %}
-        <form action="{% url 'delete' obj.id %}" method="post">
-          {% csrf_token %}
-          <input class="btn btn-primary" type="submit" value="Delete">
-          {%endif%}
-      </form>
-      </div>
-    </div>
-    <br> -->
-
-    <!-- <div class="row">
-    <div class="col-3"></div>
-    <div class="pt-5 col-8 morado-claro bg-info">
-        <p>Object ID: {{ obj.id }}</p>
-        <p>Producto: {{ obj.product_name }}</p>
-        <p>Reseña: {{ obj.content }}</p>
-        <p>Puntuación: {{ obj.punctuation }}</p>
-        <form action="{% url 'delete' obj.id %}" method="post">
-            {% csrf_token %}
-            <input class="btn btn-primary" type="submit" value="{{obj.id}}">
-        </form>
-    </div>
-</div> -->
-<!-- {% endfor %}
-</div> 
-    {% endblock %}-->
-    
+    {% endblock %}
 </body>
 <footer>
   <div class="bg-transparent fixed-bottom">

@@ -138,6 +138,10 @@ def ModifyReview(request, review_id):
         # Se redirige a '/ShowReviews/'
         return render(request, 'reviews/ModifyReview.html', {'form':form, 'review': review, 'categories': categories})
 
+
+# Función que modifica una reseña.
+# Toma los nuevos datos ingresados por el usuario para actualizar su reseña, y actualiza la base de datos. Antes se verifica que esté 
+# logueado y que lo que ingresó sea válido.
 def ModifiedReview(request, review_id):
     if request.method == 'POST':
         form = CreateReviewForm(request.POST)
@@ -164,47 +168,69 @@ def ModifiedReview(request, review_id):
 # se verifica que no sea nulo. En caso de que sea nulo, se vuelve a la página pues no hay filtro. En caso contrario, obtenemos las
 # reseñas del usuario cuyas categorías coincidan con el parámetro recogido.
 def filterMyReviews(request):
+     # Recoge los datos por los que filtrar
      form = FilterMyReviews(request.POST)
+     # Verifica que el usuario esté autenticado y el form sea válido
      if request.user.is_authenticated and form.is_valid():
+        # Se recoge la categoría por la que se está filtrando
         category = form.cleaned_data["category"]
+        # Si se presiona filtrar sin dar una categoría...
         if category=="0":
             return redirect('/myReviews/')
+        # Se entregan los objetos filtrados
         user_objects = Review.objects.filter(author_nickname=request.user, category=category)
+        # Se da un nuevo form para filtrar
         filterForm = FilterMyReviews()
+        # Se renderiza la pág. con los datos filtrados
         return render(request, 'reviews/myReviews.html', {'filterForm':filterForm, 'reviews': user_objects, 'categories': categories})
      else: 
             return redirect('/login/')
      
 # Función que recibe una request, la cual tiene 2 parámetro: la categoría y un username de las reseñas que se quieren mostrar en la página de 
-# Últimas Reseñas. Se verifica que el usuario esté autenticado, y luego se procede a realizar el filtro. Se recoge el valor de la request,
+# Últimas Reseñas. Se procede a realizar el filtro. Se recoge el valor de la request,
 # se verifica que no sea nulo en caso de la categoría y que no sea el string vacío. En caso de que sea nulo y vacío, se vuelve a la página 
 # pues no hay filtro. En caso contrario, obtenemos las
 # reseñas del usuario cuyas categorías y usuario coincidan con los parámetros recogido.
 def filterAllReviews(request):
+     # Recoge los datos por los que filtrar
      form = FilterAllReviews(request.POST)
-     if request.user.is_authenticated and form.is_valid():
+     # Verifica que el form sea válido
+     if form.is_valid():
+        # Se recoge el nombre de usuario y la categoría por la que se está filtrando
         category = form.cleaned_data["category"]
         username=form.cleaned_data['username']
+        # Si se presiona filtrar sin colocar nombre de usuario y sin escoger categoría...
         if category=="0" and username=="":
             return redirect('/ShowReviews/')
-        
-        valid_users = User.objects.filter(username__icontains = username)
+        # Se recoge el usuario que tenga el nombre de usuario ingresado  
+        valid_users = User.objects.filter(username__iexact = username)
+        # Si hay nombre de usuario pero no categoría
         if category == "0":
+            # Encontramos al usuario con ese nombre de usuario
             objects = []
             for usr in valid_users:
                 revs = Review.objects.filter(author_nickname = usr)
                 for rev in revs:
                     objects += [rev] 
+            # Creamos nuevo form de filtrado
             filterForm = FilterAllReviews()
-            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories})
+            # Entregamos lista con filtros ingresados
+            filtros = [username, ]
+            # Renderizamos página con los filtros aplicados
+            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories, 'filtros': filtros})
         else:
+            # Encontramos al usuario con ese nombre de usuario
             objects = []
             for usr in valid_users:
                 revs = Review.objects.filter(author_nickname = usr, category=category)
                 for rev in revs:
                     objects += [rev] 
+            # Creamos nuevo form de filtrado
             filterForm = FilterAllReviews()
-            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories})
+            # Entregamos lista con filtros ingresados
+            filtros = [username, category]
+            # Renderizamos página con los filtros aplicados
+            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories, 'filtros': filtros})
      else: 
             return redirect('/login/')
      
