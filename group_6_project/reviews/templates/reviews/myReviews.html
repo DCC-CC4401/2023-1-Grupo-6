@@ -105,11 +105,22 @@
                       {% endif %}
                     {% endfor %}
                   </div>
-                  
-                  <div class="card-body">
-                    <h5 class="card-text">Producto: {{ obj.product_name }}</h5>
-                    <p class="card-text">{{ obj.content }}</p>
-                    <p class="card-text">Calificación: {{ obj.punctuation }}</p>
+                  <br>
+                  <div class="row">
+                    <div class="col-8">
+                      <div class="card-body px-4">
+                        <h5 class="card-text">Producto: {{ obj.product_name }}</h5>
+                        <p class="card-text">{{ obj.content }}</p>
+                        <p class="card-text">Calificación: {{ obj.punctuation }}</p>
+                      </div>
+                    </div>
+                    {% if obj.object_image %}
+                    <div class="col-4">
+                      <img src="{{ obj.object_image.url }}" width="200" height="200">
+                    </div>
+                    {% endif %}
+                  </div>
+                  <div class="card-body px-4">
                     {% if user.id == obj.author_nickname.id %}
                     <div class="row text-center">
                       <div class="col-4">
