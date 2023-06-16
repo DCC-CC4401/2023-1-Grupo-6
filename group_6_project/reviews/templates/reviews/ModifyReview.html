@@ -85,7 +85,7 @@
           <div class="col-8 py-5">
 
             <div class="row row-cols-1 borde morado-claro p-4">
-            <form style="height: 390px;" action="{% url 'modifiedReview' review.id %}" method="post">
+            <form style="height: 390px;" action="{% url 'modifiedReview' review.id %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
             
               <div class="col fs-2">
@@ -105,6 +105,12 @@
                       {{ form.punctuation }}
                   
                 </div>
+
+                {% if form.object_image %}
+                <div>
+                  {{form.object_image}}
+                </div>
+                {% endif %}
                 <div class="pt-3 text-center">
                   {{ form.content }}
                   <button type="submit" class="btn text-white mt-3 mb-0 morado-oscuro">Guardar</button>

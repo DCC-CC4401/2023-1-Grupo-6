@@ -134,7 +134,7 @@ def ModifyReview(request, review_id):
             (4, "FOUR_STARS"),
             (5, "FIVE_STARS"),
         ]
-        initial = {"product_name":review.product_name, "category":review.category, "content":review.content, "punctuation":review.punctuation}
+        initial = {"product_name":review.product_name, "category":review.category, "content":review.content, "punctuation":review.punctuation, "object_image":review.object_image}
         form = CreateReviewForm(initial=initial)
         # Se redirige a '/ShowReviews/'
         return render(request, 'reviews/ModifyReview.html', {'form':form, 'review': review, 'categories': categories})
@@ -145,19 +145,21 @@ def ModifyReview(request, review_id):
 # logueado y que lo que ingresó sea válido.
 def ModifiedReview(request, review_id):
     if request.method == 'POST':
-        form = CreateReviewForm(request.POST)
+        form = CreateReviewForm(request.POST, request.FILES)
         # Si los datos son válidos según el formulario 
         if form.is_valid() and request.user.is_authenticated:
             product_name = form.cleaned_data["product_name"] # Nombre del producto
             content = form.cleaned_data["content"] # Contenido de la review
             category = form.cleaned_data["category"] # Categoría
             punctuation = form.cleaned_data["punctuation"] # Puntuación 
+            image = request.FILES['object_image']
             # Se crea la Review
             review = Review.objects.filter(id=review_id)[0]
             review.product_name=product_name
             review.content=content
             review.category=category
             review.punctuation=punctuation
+            review.object_image = image
             # Guarda la Review
             review.save()
             # Redirige a '/myReviews/'
