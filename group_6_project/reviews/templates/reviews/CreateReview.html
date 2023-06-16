@@ -79,7 +79,7 @@
             
                 
             <div class="row row-cols-1 borde morado-claro p-4">
-              <form style="height: 390px;" method="post">
+              <form style="height: 390px;" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
               <div class="col fs-2">
                 Nueva reseña
@@ -100,6 +100,8 @@
                 </div>
                 <div class="pt-3 text-center">
                   {{ form.content }}
+                
+                    {{ form.object_image}}
                   <button type="submit" class="btn text-white mt-3 mb-0 morado-oscuro">Crear</button>
                 </div>
                 

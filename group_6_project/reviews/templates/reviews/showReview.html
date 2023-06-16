@@ -123,12 +123,23 @@
                       <h5 style="text-align: right;" class="col-7 h-100 mt-3 card-title justify-content-right">{{ category.name }}</h5>
                       {% endif %}
                     {% endfor %}
-                  </div>        
-                                   
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-8">
+                      <div class="card-body px-4">
+                        <h5 class="card-text">Producto: {{ obj.product_name }}</h5>
+                        <p class="card-text">{{ obj.content }}</p>
+                        <p class="card-text">Calificación: {{ obj.punctuation }}</p>
+                      </div>
+                    </div>
+                    {% if obj.object_image %}
+                    <div class="col-4">
+                      <img src="{{ obj.object_image.url }}" width="200" height="200">
+                    </div>
+                    {% endif %}
+                  </div>
                   <div class="card-body px-4">
-                    <h5 class="card-text">Producto: {{ obj.product_name }}</h5>
-                    <p class="card-text">{{ obj.content }}</p>
-                    <p class="card-text">Calificación: {{ obj.punctuation }}</p>
                     {% if user.id == obj.author_nickname.id %}
                     <form action="{% url 'delete' obj.id %}" method="post">
                       {% csrf_token %}

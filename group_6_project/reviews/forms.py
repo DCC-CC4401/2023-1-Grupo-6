@@ -35,7 +35,8 @@ class CreateReviewForm(forms.Form):
        ("5", "FIVE_STARS"),
     ]
     punctuation = forms.ChoiceField(label="Puntuacion", widget=forms.Select(attrs={'class': 'form-select text-muted'}),choices=PUNCTUATIONS)
-    
+    object_image = forms.ImageField(label="Imagen del producto...")
+
 class FilterMyReviews(forms.Form):
         choices = [("0", "Todas las categorias")]
         choices += [(category['id'], category['name']) for category in categories]

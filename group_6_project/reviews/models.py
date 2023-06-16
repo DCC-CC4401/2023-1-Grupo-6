@@ -1,6 +1,6 @@
 from django.utils import timezone
 from django.db import models
-
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -15,6 +15,12 @@ class User(AbstractUser):
    birthdate = models.DateField(null=True, blank=True)
    # Campo de carácteres. Tiene largo máximo de 50 carácteres, puede estar vacío o ser NULL en la bdd.
    country = models.CharField(max_length=50,  blank=True, null=True)
+
+   def clean_username(self):
+       usrname = self.cleaned_data.get("username")
+       if User.objects.filter(username=usrname).exists():
+           raise ValidationError({'username': 'Este nombre de usuario ya está en uso.'})
+
 
 # devuelve la edad del usuario en años, calculada a partir de su fecha de nacimiento (birthdate). 
 # Este método utiliza la biblioteca de timezone de Django para obtener la fecha actual y calcular 
@@ -56,8 +62,8 @@ class Review(models.Model):  # Todolist able name that inherits models.Model
    #  likes = models.IntegerField(null=True, default=0)
       # Campo de enteros. Contiene la cantidad de "me gusta" que ha recibido de otros usuarios
    #  dislikes = models.IntegerField(null=True, default=0)
-
     author_nickname =  models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)# autodesc
+    object_image = models.ImageField(null=True, blank=True, upload_to="review_images/")
 
 # Modelo que hereda de la clase Model del módulo models de Django. Tiene los campos "id_reseña" y "username", 
 # para tener almacenado a qué username corresponde qué reseña

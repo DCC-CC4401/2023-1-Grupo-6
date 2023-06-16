@@ -83,15 +83,16 @@ def CreateReview(request):
     if request.user.is_authenticated:
          # Si es un método POST, se recogen los datos y se agrega una review al usuario
         if request.method == 'POST':
-            form = CreateReviewForm(request.POST)
+            form = CreateReviewForm(request.POST, request.FILES)
             # Si los datos son válidos según el formulario y el usuario está ingresado
             if form.is_valid() and request.user.is_authenticated:
                 product_name = form.cleaned_data["product_name"] # Nombre del producto
                 content = form.cleaned_data["content"] # Contenido de la review
                 category = form.cleaned_data["category"] # Categoría
                 punctuation = form.cleaned_data["punctuation"] # Puntuación 
+                image = request.FILES['object_image']
                 # Se crea la Review
-                review = Review(product_name=product_name, category=category, content=content, punctuation=punctuation, author_nickname=request.user)
+                review = Review(product_name=product_name, category=category, content=content, punctuation=punctuation, author_nickname=request.user, object_image=image)
                 # Guarda la Review
                 review.save()
                 # Redirige a '/ShowReviews/'
