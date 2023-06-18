@@ -207,6 +207,19 @@ def filterAllReviews(request):
             return redirect('/ShowReviews/')
         # Se recoge el usuario que tenga el nombre de usuario ingresado  
         valid_users = User.objects.filter(username__iexact = username)
+        # Si no hay nombre de usuario pero sí categoría
+        if username == "":
+            objects = []
+            revs = Review.objects.filter(category = category)
+            for rev in revs:
+                objects += [rev] 
+            # Creamos nuevo form de filtrado
+            filterForm = FilterAllReviews()
+            # Entregamos lista con filtros ingresados
+            filtros = [username, category]
+            # Renderizamos página con los filtros aplicados
+            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories, 'filtros': filtros})
+
         # Si hay nombre de usuario pero no categoría
         if category == "0":
             # Encontramos al usuario con ese nombre de usuario
