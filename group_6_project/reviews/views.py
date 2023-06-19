@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import LogInForm, RegisterForm, CreateReviewForm, FilterMyReviews, FilterAllReviews
-from reviews.models import User, Review
+from .forms import LogInForm, RegisterForm, CreateReviewForm, FilterMyReviews, FilterAllReviews, CreateComment
+from reviews.models import User, Review, Comments
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 import json
@@ -260,6 +260,29 @@ def DeleteReviewSR(request, review_id):
     # Se redirige a '/ShowReviews/'
     return redirect('/ShowReviews/')
 
+# Función que permite comentar una reseña desde la página de ShowReviews. Se recibe una request y el id de la reseña a comentar.
+def Comment(request, review_id):
+    if request.user.is_authenticated:
+         # Si es un método POST, se recogen los datos y se agrega un comentario a la reseña
+        if request.method == 'POST':
+            # form = CreateComment(request.POST)
+            # Si los datos son válidos según el formulario y el usuario está ingresado
+            
+                comentario = request.POST.get('comment') # Contenido del comentario
+                # Se crea el comentario
+                print(comentario)
+                review = Review.objects.get(id=int(review_id))
+                comment = Comments(content=comentario, username=request.user, id_review=review)
+                # Guarda el comentario
+                comment.save()
+                # Redirige a '/ShowReviews/'
+                return redirect('/ShowReviews/')
+        else:
+            # Si es un método GET, se entrega un formulario para ser llenado
+            form = CreateComment()
+        return render(request, 'reviews/ShowReviews.html', {'form': form})
+    else:
+            return redirect('/login/')
 
 # Redirige a '/createReview/'
 def GoCreateReview(request):

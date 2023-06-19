@@ -48,3 +48,6 @@ class FilterAllReviews(forms.Form):
         choices = [("0", "Todas las categorias")]
         choices += [(category['id'], category['name']) for category in categories]
         category = forms.ChoiceField(label='Select a country', widget=forms.Select(attrs={'class': 'form-select text-muted'}), choices=choices,  required=True)
+
+class CreateComment(forms.Form):
+        content = forms.CharField(label='Haz tu comentario...', widget=forms.Textarea(attrs={'placeholder':'Haz tu comentario...', 'class': 'form-control h-50'}), max_length=500)
