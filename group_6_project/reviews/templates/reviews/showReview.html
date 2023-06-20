@@ -165,6 +165,15 @@
                     {%endif%}
                   </div>
                 </div>
+                {% for com in comments %}
+                  {%if com.id_review == obj%}
+                  <div class="card-body px-4">
+                    <h5 class="card-text">Usuario: {{ com.username }}</h5>
+                    <p class="card-text">{{ com.creation_date }}</p>
+                    <p class="card-text">{{ com.content }}</p>
+                  </div>
+                  {%endif%}
+                {% endfor %}
                 {% endfor %}
                 {% if not reviews %}
                 <div class="pb-1 fs-1"> No se encontraron resultados :(</div>

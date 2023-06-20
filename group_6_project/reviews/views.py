@@ -108,8 +108,14 @@ def CreateReview(request):
 def ShowReviews(request):
         # Se recuperan las 5 últimas reseñas
         last_five_objects = Review.objects.order_by('-id')[:5]
+
+        # entrega de comentarios asociados
+        comments=[]
+        for objects in last_five_objects:
+             last_five_comments= Comments.objects.filter(id_review=objects).order_by('-id')[:3]
+             comments+=last_five_comments
         filterForm = FilterAllReviews()
-        return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': last_five_objects, 'categories': categories})
+        return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': last_five_objects, 'categories': categories,'comments': comments})
 
 # Se dirige al template showMyReview.html donde se cargan las últimas 5 reviews
 def ShowMyReviews(request):
@@ -117,7 +123,13 @@ def ShowMyReviews(request):
         if request.user.is_authenticated:
             user_objects = Review.objects.filter(author_nickname=request.user)
             filterForm = FilterMyReviews()
-            return render(request, 'reviews/myReviews.html', {'filterForm':filterForm, 'reviews': user_objects, 'categories': categories})
+
+            # entrega de comentarios asociados
+            comments=[]
+            for objects in user_objects:
+                last_five_comments= Comments.objects.filter(id_review=objects).order_by('-id')[:3]
+                comments+=last_five_comments
+            return render(request, 'reviews/myReviews.html', {'filterForm':filterForm, 'reviews': user_objects, 'categories': categories, 'comments': comments})
         else: 
             return redirect('/login/')
 
@@ -182,10 +194,16 @@ def filterMyReviews(request):
             return redirect('/myReviews/')
         # Se entregan los objetos filtrados
         user_objects = Review.objects.filter(author_nickname=request.user, category=category)
+
+        # entrega de comentarios asociados
+        comments=[]
+        for objects in user_objects:
+            last_five_comments= Comments.objects.filter(id_review=objects).order_by('-id')[:3]
+            comments+=last_five_comments
         # Se da un nuevo form para filtrar
         filterForm = FilterMyReviews()
         # Se renderiza la pág. con los datos filtrados
-        return render(request, 'reviews/myReviews.html', {'filterForm':filterForm, 'reviews': user_objects, 'categories': categories})
+        return render(request, 'reviews/myReviews.html', {'filterForm':filterForm, 'reviews': user_objects, 'categories': categories, 'comments': comments})
      else: 
             return redirect('/login/')
      
@@ -212,13 +230,19 @@ def filterAllReviews(request):
             objects = []
             revs = Review.objects.filter(category = category)
             for rev in revs:
-                objects += [rev] 
+                objects += [rev]
+
+            # entrega de comentarios asociados
+            comments=[]
+            for obj in revs:
+                last_five_comments= Comments.objects.filter(id_review=obj).order_by('-id')[:3]
+                comments+=last_five_comments 
             # Creamos nuevo form de filtrado
             filterForm = FilterAllReviews()
             # Entregamos lista con filtros ingresados
             filtros = [username, category]
             # Renderizamos página con los filtros aplicados
-            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories, 'filtros': filtros})
+            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories, 'filtros': filtros,'comments':comments})
 
         # Si hay nombre de usuario pero no categoría
         if category == "0":
@@ -227,26 +251,38 @@ def filterAllReviews(request):
             for usr in valid_users:
                 revs = Review.objects.filter(author_nickname = usr)
                 for rev in revs:
-                    objects += [rev] 
+                    objects += [rev]
+
+                # entrega de comentarios asociados 
+                comments=[]
+                for obj in revs:
+                    last_five_comments= Comments.objects.filter(id_review=obj).order_by('-id')[:3]
+                    comments+=last_five_comments 
             # Creamos nuevo form de filtrado
             filterForm = FilterAllReviews()
             # Entregamos lista con filtros ingresados
             filtros = [username, ]
             # Renderizamos página con los filtros aplicados
-            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories, 'filtros': filtros})
+            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories, 'filtros': filtros, 'comments': comments})
         else:
             # Encontramos al usuario con ese nombre de usuario
             objects = []
             for usr in valid_users:
                 revs = Review.objects.filter(author_nickname = usr, category=category)
                 for rev in revs:
-                    objects += [rev] 
+                    objects += [rev]
+
+                # entrega de comentarios asociados 
+                comments=[]
+                for obj in revs:
+                    last_five_comments= Comments.objects.filter(id_review=obj).order_by('-id')[:3]
+                    comments+=last_five_comments 
             # Creamos nuevo form de filtrado
             filterForm = FilterAllReviews()
             # Entregamos lista con filtros ingresados
             filtros = [username, category]
             # Renderizamos página con los filtros aplicados
-            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories, 'filtros': filtros})
+            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories, 'filtros': filtros, 'comments': comments})
      else: 
             return redirect('/login/')
      
