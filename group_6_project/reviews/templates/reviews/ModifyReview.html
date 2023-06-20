@@ -58,7 +58,7 @@
     <div class="container-fluid min-vh-100 contenido pt-5">
         <div class="row row-cols-auto">
           <div class="col-2 morado-oscuro py-3">
-          <div class="h-100  border border-2 border-light">
+          <div class="h-100  border border-2 rounded border-light">
             <div class="row p-5 justify-content-center"> 
               <img src="{% static 'reviews/user.png' %}" class="rounded-circle img-fluid">
             </div>        
@@ -85,7 +85,7 @@
           <div class="col-8 py-5">
 
             <div class="row row-cols-1 borde morado-claro p-4">
-            <form style="height: 390px;" action="{% url 'modifiedReview' review.id %}" method="post" enctype="multipart/form-data">
+            <form style="height: 450px;" action="{% url 'modifiedReview' review.id %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
             
               <div class="col fs-2">
@@ -105,15 +105,19 @@
                       {{ form.punctuation }}
                   
                 </div>
-
-                {% if form.object_image %}
+                <div class="pt-2 pb-2">
+                  {% if form.object_image %}
+                </div>
                 <div>
                   {{form.object_image}}
                 </div>
                 {% endif %}
-                <div class="pt-3 text-center">
+                <div class="pt-3 pb-3">
                   {{ form.content }}
-                  <button type="submit" class="btn text-white mt-3 mb-0 morado-oscuro">Guardar</button>
+                  <div class="text-center mb-3">
+                    <button type="submit" class="btn text-white mt-3 mb-0 morado-oscuro">Guardar</button>
+                  </div>
+                  
                   <!-- <button type="submit" class="btn text-white mt-3 mb-0 bg-danger">Cancelar</button> -->
                 </div>
               </div>

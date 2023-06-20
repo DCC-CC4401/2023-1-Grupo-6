@@ -51,7 +51,7 @@
       <div class="container-fluid min-vh-100 contenido pt-5">
         <div class="row row-cols-auto">
           <div class="col-2 morado-oscuro contenido2 py-3">
-          <div class="h-100 border border-2 border-light">
+          <div class="h-100 border border-2 rounded border-light">
             <div class="row p-5 justify-content-center"> 
               <img src="{% static 'reviews/user.png' %}" class="rounded-circle img-fluid">
             </div>        
@@ -79,12 +79,19 @@
           <div class="col-8">
             <div class="pb-1 fs-1">Mis reseñas</div>
             <div class="row p-2 mb-3">
-              <div class="col"> 
-                <div class="col-6">
-                  <form action="{% url 'filterMyReviews' %}" method="post">
+              <div> 
+                <div>
+                  <form class="d-flex flex-row" action="{% url 'filterMyReviews' %}" method="post">
                     {% csrf_token %}
-                    {{filterForm.category}}
-                    <input class="btn btn-danger" type="submit" value="Filtrar">
+                    <div class="col-10 mr-3 px-4">
+                      <div>
+                        {{filterForm.category}}
+                      </div>
+                      
+                    </div>
+                    <div classs="col">
+                      <input class="btn btn-danger form-control" type="submit" value="Filtrar">
+                    </div>
                   </form>
                 </div>
                 <div class="col-6"></div>

@@ -51,7 +51,7 @@
       <div class="container-fluid min-vh-100 contenido pt-5">
         <div class="row row-cols-auto">
           <div class="col-2 morado-oscuro contenido2 py-3">
-            <div class="h-100 border border-2 border-light">
+            <div class="h-100 border border-2 rounded border-light">
               <div class="row p-5 justify-content-center"> 
                 <img src="{% static 'reviews/user.png' %}" class="rounded-circle img-fluid">
               </div>        
@@ -79,7 +79,7 @@
             
                 
             <div class="row row-cols-1 borde morado-claro p-4">
-              <form style="height: 390px;" method="post" enctype="multipart/form-data">
+              <form style="height: 450px;" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
               <div class="col fs-2">
                 Nueva reseña
@@ -100,8 +100,10 @@
                 </div>
                 <div class="pt-3 text-center">
                   {{ form.content }}
-                
-                    {{ form.object_image}}
+                <div class="pt-3">
+                  {{ form.object_image}}
+                </div>
+                    
                   <button type="submit" class="btn text-white mt-3 mb-0 morado-oscuro">Crear</button>
                 </div>
                 

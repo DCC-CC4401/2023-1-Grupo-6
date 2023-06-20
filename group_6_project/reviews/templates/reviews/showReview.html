@@ -52,7 +52,7 @@
         <div class="row row-cols-auto">
           {% if user.is_authenticated %}
           <div class="col-2 morado-oscuro contenido2 py-3">
-          <div class="h-100 border border-2 border-light">
+          <div class="h-100 border border-2 rounded border-light">
             <div class="row p-5 justify-content-center"> 
               <img src="{% static 'reviews/user.png' %}" class="rounded-circle img-fluid">
             </div>        
@@ -81,22 +81,22 @@
           </div>
           <div class="col-8">
             <div class="pb-1 fs-1">Últimas reseñas</div>
-            <div class="row p-2 mb-3">
-              <form action="{% url 'filterAllReviews' %}" method="post">
+            <div class="p-2 mb-3">
+              <form class="d-flex flex-row" action="{% url 'filterAllReviews' %}" method="post">
               {% csrf_token %}
-              <div class="col"> 
-                <div class="input-group rounded">
+              <div class="col-5"> 
                   {{filterForm.username}}      
-                </div>
               </div>
-              <div class="col">
+              <div class="col-5 px-4">
                 {{filterForm.category}}
-                    <input class="btn btn-danger" type="submit" value="Filtrar">
+              </div>
+              <div class="col">  
+                <input class="btn btn-danger" type="submit" value="Filtrar">
               </div>
             </form>
-            </div>
+            </div>  
             {% if filtros %}
-              <div> Mostrando resultados para los filtros:</div>
+              <div> Mostrando resultados para:</div>
 
               {% if filtros.0 %}
               <div> Nombre de usuario: {{filtros.0}} </div>
