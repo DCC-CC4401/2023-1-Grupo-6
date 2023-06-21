@@ -167,11 +167,19 @@
                 </div>
                 {% for com in comments %}
                   {%if com.id_review == obj%}
-                  <div class="card-body px-4">
+                  <div class="card-body px-4 border rounded">
                     <h5 class="card-text">Usuario: {{ com.username }}</h5>
                     <p class="card-text">{{ com.creation_date }}</p>
                     <p class="card-text">{{ com.content }}</p>
                   </div>
+                  {% if user.id == com.username.id %}
+                  <form action="{% url 'deleteComment' com.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="text-center">
+                      <input class="btn btn-danger" type="submit" value="Eliminar">
+                    </div>
+                  </form>
+                  {%endif%}
                   {%endif%}
                 {% endfor %}
                 {% endfor %}

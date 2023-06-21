@@ -303,22 +303,30 @@ def Comment(request, review_id):
         if request.method == 'POST':
             # form = CreateComment(request.POST)
             # Si los datos son válidos según el formulario y el usuario está ingresado
-            
-                comentario = request.POST.get('comment') # Contenido del comentario
-                # Se crea el comentario
-                print(comentario)
-                review = Review.objects.get(id=int(review_id))
-                comment = Comments(content=comentario, username=request.user, id_review=review)
-                # Guarda el comentario
-                comment.save()
-                # Redirige a '/ShowReviews/'
-                return redirect('/ShowReviews/')
+            comentario = request.POST.get('comment') # Contenido del comentario
+            # Se crea el comentario
+            print(comentario)
+            review = Review.objects.get(id=int(review_id))
+            comment = Comments(content=comentario, username=request.user, id_review=review)
+            # Guarda el comentario
+            comment.save()
+            # Redirige a '/ShowReviews/'
+            return redirect('/ShowReviews/')
         else:
             # Si es un método GET, se entrega un formulario para ser llenado
             form = CreateComment()
         return render(request, 'reviews/ShowReviews.html', {'form': form})
     else:
             return redirect('/login/')
+    
+# Se borra un comentario 
+def DeleteComment(request, com_id):    
+    # Recupera el comentario
+    comment = Comments.objects.filter(id=com_id)
+    # Se borra ese objeto
+    comment.delete()
+    # Se redirige a '/ShowReviews/'
+    return redirect('/ShowReviews/')
 
 # Redirige a '/createReview/'
 def GoCreateReview(request):
