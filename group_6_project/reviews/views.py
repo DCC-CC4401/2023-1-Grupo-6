@@ -45,15 +45,18 @@ def Login(request):
 #     y lo redirige a la URL '/login/' si todo se realiza exitosamente.
 #     Si es un GET request el que se recibe, al usuario se le presenta un formulario de registro para llenar.
 def register_user(request):
+    data = {
+         'form':RegisterForm()
+    }
     # Si es un método GET, se entrega un formulario para ser llenado
-    if request.method == 'GET': 
-        form = RegisterForm()
-        return render(request, "reviews/register_user.html", {'form': form}) 
+    # if request.method == 'GET': 
+    #     form = RegisterForm()
+    #     return render(request, "reviews/register_user.html", {'form': form}) 
     
     # Si es un método POST, se recogen los datos y se agrega un usuario
-    elif request.method == 'POST': 
+    if request.method == 'POST': 
         #Tomar los elementos del formulario que vienen en request.POST
-        form = RegisterForm(request.POST)
+        form = RegisterForm(data=request.POST)
         # Si los datos son válidos según el formulario 
         if form.is_valid():
             first_name = form.cleaned_data.get('first_name') # El primer nombre
@@ -67,7 +70,8 @@ def register_user(request):
             user = User.objects.create_user(first_name=first_name, last_name=last_name,username=username, password=password, email=email, country=country, birthdate=birthdate) 
             # Redirecciona a login
             return HttpResponseRedirect('/login/')
-        
+        data['form'] = form
+    return render(request, "reviews/register_user.html", data)
     
 # Se lee el .json con las categorías de las reseñas. Serán utilizadas para recuperar el nombre de la categoria.
 with open('reviews/assets/categories.json', 'r') as f:

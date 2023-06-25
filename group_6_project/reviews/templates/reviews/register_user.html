@@ -72,9 +72,11 @@
                 <div class="row">
                   <div class="col mb-3">
                     {{ form.first_name }}
+                    {{ form.first_name.errors }}
                   </div>
                   <div class="col mb-3">
                     {{ form.last_name }}
+                    {{ form.last_name.errors }}
                   </div>
                 </div>
                 <div class="row">
@@ -83,18 +85,23 @@
                   </div>
                   <div class="col-6 mb-2">
                     {{ form.birth_date }}
+                    {{ form.birth_date.errors }}
                 </div>
                 <div class="mb-2 pt-1">
                   {{ form.email }}
+                  {{ form.email.errors }}
                 </div>
                 <div class="mb-2 pt-1">
                   {{ form.username }}
+                  {{ form.username.errors }}
                 </div>
                 <div class="mb-2 pt-1">
                   {{ form.password }}
+                  {{ form.password.errors }}
                 </div>
                 <div class="pt-1">
                   {{ form.repeat_password }}
+                  {{ form.repeat_password.errors }}
                 </div>
               </div>
               <div class="col text-center justify-content-center">
@@ -109,32 +116,7 @@
           </div>
         </div>
     </div>
-   <!-- <h1> Registro </h1>
-   <form method="post">
-       {% csrf_token %} -->
-       <!-- <div class="form-group">
-           <label for="nombre_usuario">Nombre</label>
-           <input type="text" class="form-control" id=nombre_usuario name="nombre" required>
-       </div>
-
-       <div class="form-group">
-           <label for="contraseña">Contraseña</label>
-           <input type="password" class="form-control" id="contraseña" name="contraseña" required>
-       </div>
-
-        <div class="form-group">
-            <label for="mail">Mail</label>
-            <input type="email" class="form-control" id="mail" name="mail" required>
-        </div>
-
-        <div class="form-group">
-            <label for="apodo">Apodo</label>
-            <input type="text" class="form-control" id="apodo" name="apodo" required>
-        </div> -->
-        <!-- {{ form }}
-    <br>
-        <button type="submit" class="block btn morado-oscuro text-white">Crear usuario</button>
-   </form> -->
+  
 </body>
 </head>
 </html>
