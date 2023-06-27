@@ -97,8 +97,20 @@
                 <div class="col-6"></div>
               </div>
             </div>
+
+            <div class="card-text">
+              <span class="card-text">
+                  {% if page_obj.has_previous %}
+                      <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                  {% endif %}
+                  <span class="card-text">{{ page_obj.number }}</span>
+                  {% if page_obj.has_next %}
+                      <a href="?page={{ page_obj.next_page_number }}">next</a>
+                  {% endif %}
+              </span>
+            </div>
             
-            {% for obj in reviews %}
+            {% for obj in page_obj %}
                 {% if user.id == obj.author_nickname.id %}
                 <div class="card borde morado-claro my-4">
                   <div class="row row-cols-auto card-header mx-1">
@@ -150,6 +162,10 @@
                   </div>{%endif%}
                 </div>
                 {% endfor %}
+
+                {% if not page_obj  %}
+                <div class="pb-1 fs-1"> No se encontraron resultados :(</div>
+                {% endif %}
           <div class="col-2">
           </div>    
       </div>

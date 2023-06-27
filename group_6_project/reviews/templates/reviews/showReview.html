@@ -109,7 +109,20 @@
                     {% endfor %}
               
             {% endif %}
-            {% for obj in reviews %}
+
+            <div class="card-text">
+              <span class="card-text">
+                  {% if page_obj.has_previous %}
+                      <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                  {% endif %}
+                  <span class="card-text">{{ page_obj.number }}</span>
+                  {% if page_obj.has_next %}
+                      <a href="?page={{ page_obj.next_page_number }}">next</a>
+                  {% endif %}
+              </span>
+            </div>
+
+            {% for obj in page_obj  %}
                 
                 <div class="card borde morado-claro my-4">
                   <div class="row row-cols-auto card-header mx-1">
@@ -183,13 +196,18 @@
                   {%endif%}
                 {% endfor %}
                 {% endfor %}
-                {% if not reviews %}
+
+                
+
+                {% if not page_obj  %}
                 <div class="pb-1 fs-1"> No se encontraron resultados :(</div>
                 {% endif %}
+
           <div class="col-2"></div>
           {% if user.is_authenticated %}
           <div class="col-1 bg-info"></div>
           {%endif%}
+          
       </div>
           </div>
         </div>

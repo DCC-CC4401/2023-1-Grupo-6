@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import LogInForm, RegisterForm, CreateReviewForm, FilterMyReviews, FilterAllReviews, CreateComment
 from reviews.models import User, Review, Comments
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator
 from django.contrib.auth import authenticate, login, logout
 import json
 # Create your views here.
@@ -111,15 +112,19 @@ def CreateReview(request):
 # Se dirige al template showReview.html donde se cargan las últimas 5 reviews
 def ShowReviews(request):
         # Se recuperan las 5 últimas reseñas
-        last_five_objects = Review.objects.order_by('-id')[:5]
-
+        all_reviews = Review.objects.order_by('-id')
+        # Crea una instancia de Paginator con una cantidad de elementos por página (en este ejemplo, 5 elementos por página)
+        paginator = Paginator(all_reviews, 5)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        print(page_obj)
         # entrega de comentarios asociados
         comments=[]
-        for objects in last_five_objects:
+        for objects in all_reviews:
              last_five_comments= Comments.objects.filter(id_review=objects).order_by('-id')[:3]
              comments+=last_five_comments
         filterForm = FilterAllReviews()
-        return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': last_five_objects, 'categories': categories,'comments': comments})
+        return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'page_obj': page_obj, 'categories': categories,'comments': comments})
 
 # Se dirige al template showMyReview.html donde se cargan las últimas 5 reviews
 def ShowMyReviews(request):
@@ -128,12 +133,15 @@ def ShowMyReviews(request):
             user_objects = Review.objects.filter(author_nickname=request.user)
             filterForm = FilterMyReviews()
 
+            paginator = Paginator(user_objects, 5)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
             # entrega de comentarios asociados
             comments=[]
             for objects in user_objects:
                 last_five_comments= Comments.objects.filter(id_review=objects).order_by('-id')[:3]
                 comments+=last_five_comments
-            return render(request, 'reviews/myReviews.html', {'filterForm':filterForm, 'reviews': user_objects, 'categories': categories, 'comments': comments})
+            return render(request, 'reviews/myReviews.html', {'filterForm':filterForm, 'page_obj': page_obj, 'categories': categories, 'comments': comments})
         else: 
             return redirect('/login/')
 
@@ -199,6 +207,9 @@ def filterMyReviews(request):
         # Se entregan los objetos filtrados
         user_objects = Review.objects.filter(author_nickname=request.user, category=category)
 
+        paginator = Paginator(user_objects, 5)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         # entrega de comentarios asociados
         comments=[]
         for objects in user_objects:
@@ -207,7 +218,7 @@ def filterMyReviews(request):
         # Se da un nuevo form para filtrar
         filterForm = FilterMyReviews()
         # Se renderiza la pág. con los datos filtrados
-        return render(request, 'reviews/myReviews.html', {'filterForm':filterForm, 'reviews': user_objects, 'categories': categories, 'comments': comments})
+        return render(request, 'reviews/myReviews.html', {'filterForm':filterForm, 'page_obj': page_obj, 'categories': categories, 'comments': comments})
      else: 
             return redirect('/login/')
      
@@ -236,6 +247,9 @@ def filterAllReviews(request):
             for rev in revs:
                 objects += [rev]
 
+            paginator = Paginator(objects, 5)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
             # entrega de comentarios asociados
             comments=[]
             for obj in revs:
@@ -246,47 +260,56 @@ def filterAllReviews(request):
             # Entregamos lista con filtros ingresados
             filtros = [username, category]
             # Renderizamos página con los filtros aplicados
-            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories, 'filtros': filtros,'comments':comments})
+            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'page_obj': page_obj, 'categories': categories, 'filtros': filtros,'comments':comments})
 
         # Si hay nombre de usuario pero no categoría
         if category == "0":
             # Encontramos al usuario con ese nombre de usuario
             objects = []
+            comments=[]
             for usr in valid_users:
                 revs = Review.objects.filter(author_nickname = usr)
                 for rev in revs:
                     objects += [rev]
 
                 # entrega de comentarios asociados 
-                comments=[]
                 for obj in revs:
                     last_five_comments= Comments.objects.filter(id_review=obj).order_by('-id')[:3]
                     comments+=last_five_comments 
+
+            paginator = Paginator(objects, 5)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
             # Creamos nuevo form de filtrado
             filterForm = FilterAllReviews()
             # Entregamos lista con filtros ingresados
             filtros = [username, ]
             # Renderizamos página con los filtros aplicados
-            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories, 'filtros': filtros, 'comments': comments})
+            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'page_obj': page_obj, 'categories': categories, 'filtros': filtros, 'comments': comments})
         else:
             # Encontramos al usuario con ese nombre de usuario
             objects = []
+            comments=[]
             for usr in valid_users:
                 revs = Review.objects.filter(author_nickname = usr, category=category)
                 for rev in revs:
                     objects += [rev]
 
                 # entrega de comentarios asociados 
-                comments=[]
                 for obj in revs:
                     last_five_comments= Comments.objects.filter(id_review=obj).order_by('-id')[:3]
                     comments+=last_five_comments 
+
+
+            paginator = Paginator(objects, 5)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
             # Creamos nuevo form de filtrado
             filterForm = FilterAllReviews()
             # Entregamos lista con filtros ingresados
             filtros = [username, category]
             # Renderizamos página con los filtros aplicados
-            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'reviews': objects, 'categories': categories, 'filtros': filtros, 'comments': comments})
+            return render(request, 'reviews/showReview.html', {'filterForm':filterForm, 'page_obj': page_obj, 'categories': categories, 'filtros': filtros, 'comments': comments})
      else: 
             return redirect('/login/')
      
