@@ -433,3 +433,9 @@ def Inicio(request):
 def LogOut(request):
     logout(request)
     return redirect('/ShowReviews/')
+
+# Renderiza el html de reviewDetails
+def reviewDetails(request, review_id):
+    review = Review.objects.filter(id=review_id)[0]
+    comments = Comments.objects.filter(id_review=review)
+    return render(request, 'reviews/reviewDetails.html', {'review': review, 'comments': comments})
