@@ -4,7 +4,7 @@ OpiCard consiste en un sitio web donde distintos usuarios pueden públicar, leer
 \
 El sitio cuenta con una página de inicio de sesión, una página de registro de nuevos usuarios, una página de inicio con las últimas 5 reseñas publicadas de otros usuarios, y una página donde el usuario puede ver su perfil con sus propias reseñas. Además cuenta con formularios para las distintas funcionalidades, como formulario de inicio de sesión, formulario de registro de usuario, formulario de creación de reseña y formulario de comentarios.\
 \
-Para registrarse, el usuario debe ingresar su nombre, apellido, país, fecha de nacimiento, un username único, su e-mail de registro y una contraseña que luego debe repetir por seguridad. Una vez registrado, será redireccionado a la página de inicio de sesión, donde puede iniciar sesíon con su username y contraseña. Con esto el usuario ya puede crear reseñas, ver otras reseñas y hacer comentarios. Para crear una nueva reseña debe ingresar el nombre del producto, el contenido de su reseña, la categoría a la que pertenece el producto y una puntuación en estrellas de 1 a 5. Una vez publicada, el autor de esta reseña puede modificarla o eliminarla cuando desee. Para crear un comentario, el usuario debe ingresar el comentario y publicarlo, el cual aparecerá junto a su username. También puede puntuar las reseñas de otros usuarios según si le gustan o no.
+Para registrarse, el usuario debe ingresar su nombre, apellido, país, fecha de nacimiento, un username único, su e-mail de registro y una contraseña que luego debe repetir por seguridad. Una vez registrado, será redireccionado a la página de inicio de sesión, donde puede iniciar sesíon con su username y contraseña. Con esto el usuario ya puede crear reseñas, ver otras reseñas y hacer comentarios. Al ver reseñas, el usuario puede filtrar por nombre de usuario y/o categoría de la reseña. Para crear una nueva reseña debe ingresar el nombre del producto, el contenido de su reseña, la categoría a la que pertenece el producto y una puntuación en estrellas de 1 a 5. Una vez publicada, el autor de esta reseña puede modificarla o eliminarla cuando desee. Para crear un comentario, el usuario debe ingresar el comentario y publicarlo, el cual aparecerá junto a su username. También puede puntuar las reseñas de otros usuarios según si le gustan o no.
 
 ## Requerimientos
 * Tener instalado Git
@@ -32,6 +32,7 @@ $ source env\Scripts\activate
 * pytz 2020.1
 * sqlparse 0.4.3
 * tzdata 2023.3\
+* Pillow 9.5.0
 Pueden instalarse todas con el siguiente comando:
 ```
 $ pip install -r requirements.txt
@@ -56,7 +57,7 @@ Debe entrar a entrar a http://127.0.0.1:8000/register donde podrá ver el formul
 Una vez creada la cuenta será se rediccionará a la página de inicio de sesión http://127.0.0.1:8000/login/ de manera automática, donde deberá iniciar sesión con el username y contraseña que indicó en el formulario de registro
 ![](images/image2.jpg)
 \
-Ahora que la sesión fue iniciada se rediccionará a la página http://127.0.0.1:8000/ShowReviews/ donde podrá ver las últimas 5 reseñas de otros usuarios
+Ahora que la sesión fue iniciada se rediccionará a la página http://127.0.0.1:8000/ShowReviews/ donde podrá ver las reseñas de otros usuarios
 ![](images/image3.jpg)
 \
 Al hacer click en el botón Crear reseña se rediccionará a la página http://127.0.0.1:8000/ShowReviews/ donde verá el formulario de creación de reseña, y la podrá subir con el botón Crear
@@ -74,8 +75,23 @@ Si hace click en el botón Modificar se redireccionará a http://127.0.0.1:8000/
 Si hace click en eliminar la reseña será eliminada y desaparecerá de la página de inicio
 ![](images/image8.jpg)
 \
+Si hace click en Like en la reseña, aumentará su contador de "me gusta". Si vuelve a hacer click en ese botón, decrecerá el contador. Usted no puede aumentar el contador de "me gusta" y el de "no me gusta" al mismo tiempo, prevalece la función del último botón presionado.
+![](images/image8.jpg)
+\
+Si hace click en Dislike en la reseña, aumentará su contador de "no me gusta". Si vuelve a hacer click en ese botón, decrecerá el contador. Usted no puede aumentar el contador de "me gusta" y el de "no me gusta" al mismo tiempo, prevalece la función del último botón presionado.
+![](images/image8.jpg)
+\
+Si hace click en Filtrar en la página de inicio, sólo se mostrarán las reseñas que coincidan con los criterios (username y categoría) especificados en los campos junto al botón. 
+![](images/image8.jpg)
+\
+Si hace click en Comentar en la reseña, se creará un objeto comentario (con el texto ingresado en el campo anterior) que aparecerá en la parte inferior de la reseña al recargar la página. 
+![](images/image8.jpg)
+\
 Al hacer click en Cerrar sesión desaparecerá la barra izquierda con los datos de su perfil y en lugar de Cerrar sesión aparecerá la opción Iniciar sesión
 ![](images/image9.jpg)
+
+
+<!-- Imagen de uso de los filtros -->
 
 ## Autores
 * Josefina Labarca
