@@ -218,6 +218,9 @@
                     <p class="card-text">{{ com.content }}</p>
                   </div>
                   {% if user.id == com.username.id %}
+                  <div class="col-2">
+                    <a class="btn morado-oscuro text-white" href="{% url 'modifyComment' com.id %}">Modificar</a>
+                  </div> 
                   <form action="{% url 'deleteComment' com.id %}" method="post">
                     {% csrf_token %}
                     <div class="text-center">

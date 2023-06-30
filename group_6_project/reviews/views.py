@@ -405,6 +405,40 @@ def DeleteComment(request, com_id):
     # Se redirige a '/ShowReviews/'
     return redirect('/ShowReviews/')
 
+# Se lleva a una página de modificación del Comment
+def ModifyComment(request, com_id):
+    # Recupera la review con id "review_id"
+    if request.method == 'GET' and request.user.is_authenticated:
+        com = Comments.objects.filter(id=com_id)[0]
+        # print(review.punctuation)
+        # comment = Comments(content=comentario, username=request.user, id_review=review)
+        initial = {"content":com.content}
+        form=CreateComment(initial=initial)
+        # Se redirige a '/ShowReviews/'
+        return render(request, 'reviews/ModifyComment.html', {'form':form, 'review': com.id_review, 'com': com})
+
+    
+# Función que modifica una reseña.
+# Toma los nuevos datos ingresados por el usuario para actualizar su reseña, y actualiza la base de datos. Antes se verifica que esté 
+# logueado y que lo que ingresó sea válido.
+def ModifiedComment(request, com_id):
+    if request.method == 'POST':
+        form = CreateComment(request.POST, request.FILES)
+        # Si los datos son válidos según el formulario 
+        if form.is_valid() and request.user.is_authenticated:
+            content = form.cleaned_data["content"] # Contenido de la review
+            # Se crea la Review
+            com = Comments.objects.filter(id=com_id)[0]
+            com.content=content
+            # Guarda la Review
+            com.save()
+            # Redirige a '/myReviews/'
+            return redirect('/ShowReviews/')
+
+
+
+
+
 # Redirige a '/createReview/'
 def GoCreateReview(request):
     return redirect('/createReview/')

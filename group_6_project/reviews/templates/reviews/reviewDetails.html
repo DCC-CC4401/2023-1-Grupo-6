@@ -183,11 +183,12 @@
                            <p class="card-text">{{ com.content }}</p> 
                         </div>
                         <div class="row m-2">
+                          {% if user.id == com.username.id %}
                             <div class="col-6">
-                                <a class="btn morado-oscuro text-white" href="#">Modificar</a>
+                                <a class="btn morado-oscuro text-white" href="{% url 'modifyComment' com.id %}">Modificar</a>
                             </div>
                             <div class="col-6">
-                               {% if user.id == com.username.id %}
+                               
                             <form action="{% url 'deleteComment' com.id %}" method="post">
                             {% csrf_token %}
                                 <div class="text-center">
@@ -214,7 +215,7 @@
     </div>
     {% endblock %}
 </body>
-<footer>
+<!--<footer>
   <div class="bg-transparent fixed-bottom">
     <a class="btn rounded-circle morado-oscuro float-end m-3" href="#Últimas_reseñas">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="30" fill="white" class="bi bi-arrow-up" viewBox="0 0 17 15">
@@ -222,5 +223,5 @@
       </svg>
     </a>
   </div>
-</footer>
+</footer>-->
 </html>
