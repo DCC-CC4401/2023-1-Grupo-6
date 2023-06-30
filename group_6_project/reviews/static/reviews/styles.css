@@ -83,3 +83,7 @@
       opacity: 0.4
 }
   
+.flex-row {
+      margin: 0 auto;
+      display: inline;
+}

@@ -154,18 +154,46 @@
                   </div>
                   <div class="card-body px-4">
                     {% if user.is_authenticated %}
-                      <div>
-                        <form action="{% url 'comment' obj.id %}" method="post">
-                      {% csrf_token %}
-                          <div class="text-left mb-2">Comentario:</div> 
-                          <div>
-                            <textarea class="form-control" name="comment" id="content" rows="3" placeholder="Haz tu comentario..."></textarea>
-                          </div>
-                          <div class="mt-3 text-center">
+                    
+                    <!-- <div class="col-8"> -->
+                      <form action="{% url 'comment' obj.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="text-left mb-2">Comentario:</div> 
+                        <div>
+                          <textarea class="form-control" name="comment" id="content" rows="3" placeholder="Haz tu comentario..."></textarea>
+                        </div>
+                    <div class="row">
+                          <div class="mt-3 text-center col-7">
                             <input class="btn text-white morado-oscuro" type="submit" value="Comentar">
                           </div>
                         </form>
+                      <!-- </div> -->
+
+                      <!-- votar dislike -->
+                      <div class="mt-3 col-3">
+                        <br><br><br>
+                        <form class="d-flex flex-row" action="{% url 'dislike' obj.id %}" method="post">
+                          {% csrf_token %}
+                          <div class="text-center">
+                            {{obj.dislikes}}
+                            <input class="btn btn-danger" type="submit" value="Dislike">
+                          </div>
+                        </form>
                       </div>
+
+                      <!-- votar like -->
+                      <div class="mt-3 col-2">
+                        <br><br><br>
+                        <form class="d-flex flex-row" action="{% url 'like' obj.id %}" method="post">
+                          {% csrf_token %}
+                          <div class="text-center">
+                            {{obj.likes}}
+                            <input class="btn btn-primary" type="submit" value="Like">
+                          </div>
+                        </form>
+                      </div>
+
+                    </div>
                     {% endif %}
 
                     {% if user.id == obj.author_nickname.id %}

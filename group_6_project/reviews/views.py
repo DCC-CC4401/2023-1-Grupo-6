@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import LogInForm, RegisterForm, CreateReviewForm, FilterMyReviews, FilterAllReviews, CreateComment
-from reviews.models import User, Review, Comments
+from reviews.models import User, Review, Comments, ReviewLikes
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
 from django.contrib.auth import authenticate, login, logout
@@ -323,6 +323,56 @@ def DeleteReviewSR(request, review_id):
     # Se redirige a '/ShowReviews/'
     return redirect('/ShowReviews/')
 
+
+# 
+def LikeReview(request, review_id):
+    user = request.user
+    review = Review.objects.get(id=review_id)
+    liked = ReviewLikes.objects.filter(user=user, review=review)[:1]
+    if liked:
+        liked = liked[0]
+        if liked.vote == 0:
+            liked.vote = 1
+            review.likes += 1
+        elif liked.vote == 1:
+            liked.vote = 0
+            review.likes -= 1
+        else: 
+            liked.vote = 1
+            review.likes += 1
+            review.dislikes -= 1
+        
+    else:
+        liked = ReviewLikes(user=user, review=review, vote=1)
+        review.likes += 1
+    liked.save()
+    review.save()
+    return redirect('/ShowReviews/')
+
+
+def DislikeReview(request, review_id):
+    user = request.user
+    review = Review.objects.get(id=review_id)
+    disliked = ReviewLikes.objects.filter(user=user, review=review)[:1]
+    if disliked:
+        disliked = disliked[0]
+        if disliked.vote == 0:
+            disliked.vote = -1
+            review.dislikes += 1
+        elif disliked.vote == -1:
+            disliked.vote = 0
+            review.dislikes -= 1
+        else: 
+            disliked.vote = -1
+            review.likes -= 1
+            review.dislikes += 1
+    else:
+        disliked = ReviewLikes(user=user, review=review, vote=-1)
+        review.dislikes += 1
+    disliked.save()
+    review.save()
+    return redirect('/ShowReviews/')
+     
 # Función que permite comentar una reseña desde la página de ShowReviews. Se recibe una request y el id de la reseña a comentar.
 def Comment(request, review_id):
     if request.user.is_authenticated:

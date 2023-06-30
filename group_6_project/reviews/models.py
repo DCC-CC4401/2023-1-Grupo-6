@@ -59,9 +59,9 @@ class Review(models.Model):  # Todolist able name that inherits models.Model
    # Campo de enteros. Puntuación dada por el creador de la reseña
     punctuation = models.IntegerField(choices=CATEGORIES, default=CATEGORIES[2][1], help_text="Puntuación")
    # Campo de enteros. Contiene la cantidad de "me gusta" que ha recibido de otros usuarios
-   #  likes = models.IntegerField(null=True, default=0)
-      # Campo de enteros. Contiene la cantidad de "me gusta" que ha recibido de otros usuarios
-   #  dislikes = models.IntegerField(null=True, default=0)
+    likes = models.IntegerField(null=True, default=0)
+   # Campo de enteros. Contiene la cantidad de "me gusta" que ha recibido de otros usuarios
+    dislikes = models.IntegerField(null=True, default=0)
     author_nickname =  models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)# autodesc
     object_image = models.ImageField(null=True, blank=True, upload_to="review_images/")
 
@@ -71,11 +71,11 @@ class Reviews_Username(models.Model):
    id_review = models.ForeignKey(Review, default="general", on_delete=models.CASCADE)
    username = models.ForeignKey(User, default="general", on_delete=models.CASCADE)
 
-# Modelo que hereda de la clase Model del módulo models de Django. Tiene los campos "id_reseña" y "username", 
+# Modelo que hereda de la clase Model del módulo models de Django. Tiene los campos "review", "user" y "vote"
 # para tener almacenado si un username ha votado "like" o "dislike" en una reseña.
 class ReviewLikes(models.Model):
-    id_review = models.ForeignKey(Review, default="general", on_delete=models.CASCADE)
-    username = models.ForeignKey(User, default="general", on_delete=models.CASCADE)
+    review = models.ForeignKey(Review, default="general", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default="general", on_delete=models.CASCADE)
     vote = models.IntegerField(default=0)
 
 # Modelo que hereda de la clase Model del módulo models de Django. Tiene los campos "id_reseña", "comentador"
@@ -88,4 +88,3 @@ class Comments(models.Model):
     content =	models.TextField(max_length=500, null=False, blank=False, default="No comment")
 
 
-   
