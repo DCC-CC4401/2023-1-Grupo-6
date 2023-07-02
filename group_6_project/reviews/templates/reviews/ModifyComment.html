@@ -11,15 +11,15 @@
 </head>
 <body>
     <nav class="navbar-expand fixed-top">
-        <div class="p-4 morado-oscuro container-fluid">
-          <div class="row row-cols-auto text-center">
+        <div class="p-2 morado-oscuro container-fluid">
+          <div class="row row-cols-auto text-center d-flex align-items-center">
             {% if user.is_authenticated %}
             <div class="col-3">
-              <a class="text-white navbar-brand " href="{% url 'ShowReviews' %}">Nombre appweb</a>
+              <a class="text-white navbar-brand" href="{% url 'ShowReviews' %}"><img src="{% static 'reviews/opicards.png' %}" width="180" height="58"></img></a>
             </div>
             {%else%} 
             <div class="col-2">
-                <a class="text-white navbar-brand" href="{% url 'ShowReviews' %}">Nombre appweb</a>
+              <a class="text-white navbar-brand" href="{% url 'ShowReviews' %}"><img class="mx-3" src="{% static 'reviews/opicards.png' %}" width="180" height="58"></img></a>
               </div>
             {%endif%}
             <div class="col-2">

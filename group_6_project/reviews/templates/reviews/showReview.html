@@ -12,15 +12,15 @@
 <body>
     {% block content %} 
     <nav class="navbar-expand fixed-top" > <!-- style="position: fixed; z-index: 100; width: 100%;" -->
-        <div class="p-4 morado-oscuro container-fluid">
-          <div class="row row-cols-auto text-center">
+        <div class="p-2 morado-oscuro container-fluid">
+          <div class="row row-cols-auto text-center d-flex align-items-center">
             {% if user.is_authenticated %}
             <div class="col-3">
-              <a class="text-white navbar-brand" href="{% url 'ShowReviews' %}">Nombre appweb</a>
+              <a class="text-white navbar-brand" href="{% url 'ShowReviews' %}"><img src="{% static 'reviews/opicards.png' %}" width="180" height="58"></img></a>
             </div>
             {%else%} 
             <div class="col-2">
-                <a class="text-white navbar-brand" href="{% url 'ShowReviews' %}">Nombre appweb</a>
+              <a class="text-white navbar-brand" href="{% url 'ShowReviews' %}"><img class="mx-3" src="{% static 'reviews/opicards.png' %}" width="180" height="58"></img></a>
               </div>
             {%endif%}
               <div class="col-2">
@@ -48,7 +48,7 @@
           </div>
         </div>
       </nav>
-      <div id="Últimas_reseñas" class="bg-light container-fluid min-vh-100 contenido pt-5">
+      <div id="top" class="bg-light container-fluid min-vh-100 contenido pt-5">
         <div class="row row-cols-auto">
           {% if user.is_authenticated %}
           <div class="col-2 morado-oscuro contenido2 py-3">
@@ -76,7 +76,7 @@
           {%endif%}
           <div class="col-10 bg-light">
             <div class="container-fluid contenido">
-        <div class="row row-cols-auto min-vh-100">
+        <div class="row row-cols-auto min-vh-100 mb-5">
           <div class="col-2">
           </div>
           <div class="col-8">
@@ -139,6 +139,7 @@
                   </div>
                   <br>
                   <div class="row">
+                    {% if obj.object_image %}
                     <div class="col-8">
                       <div class="card-body px-4">
                         <h5 class="card-text">Producto: {{ obj.product_name }}</h5>
@@ -146,15 +147,66 @@
                         <p class="card-text">Calificación: {{ obj.punctuation }}</p>
                       </div>
                     </div>
-                    {% if obj.object_image %}
-                    <div class="col-4">
+                    <div class="col-4 p-1 d-flex align-items-center">
                       <img src="{{ obj.object_image.url }}" width="200" height="200">
+                    </div>
+                    {% else %}
+                    <div class="col">
+                      <div class="card-body px-4">
+                        <h5 class="card-text">Producto: {{ obj.product_name }}</h5>
+                        <p class="card-text">{{ obj.content }}</p>
+                        <p class="card-text">Calificación: {{ obj.punctuation }}</p>
+                      </div>
                     </div>
                     {% endif %}
                   </div>
+                  {% if user.is_authenticated %}
                   <div class="card-body px-4">
-                    {% if user.is_authenticated %}
-                    
+                    <div class="row mb-2">
+                      <div class="col-1"></div>
+                      <div class="col">
+                        <div class="text-align d-flex justify-content-end">
+                          <a class="btn text-center morado-oscuro text-white" href="{% url 'details' obj.id %}">Ver más</a>
+                        </div> 
+                      </div>
+                      <div class="col d-flex justify-content-start">
+                        {% if user.id == obj.author_nickname.id %}
+                        <form action="{% url 'delete' obj.id %}" method="post">
+                          {% csrf_token %}
+                          <div class="text-center">
+                            <input class="btn btn-danger" type="submit" value="Eliminar">
+                          </div>
+                        </form>
+                        {%endif%}
+                      </div>
+                      <!-- votar dislike -->
+                      <div class="col-2 d-flex justify-content-end">
+                        <form class="" action="{% url 'dislike' obj.id %}" method="post">
+                          {% csrf_token %}
+                          <div class="text-center">
+                            {{obj.dislikes}}
+                            <input class="bg-transparent" style="background-image: url('../../static/reviews/hand-thumbs-down-fill.svg'); border:none; background-repeat:no-repeat;background-size:100% 100%;" type="submit" value="   ">
+                          </div>
+                        </form>
+                      </div>
+
+                      <!-- votar like -->
+                      <div class="col-2 d-flex justify-content-start">
+                        <form class="" action="{% url 'like' obj.id %}" method="post">
+                          {% csrf_token %}
+                          <div class="text-center">
+                            {{obj.likes}}
+                            <input class="bg-transparent" style="background-image: url('../../static/reviews/hand-thumbs-up-fill.svg'); border:none; background-repeat:no-repeat;background-size:100% 100%;" type="submit" value="   ">
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <div class="row my-3">
+                      
+                      
+                      
+                      
+                    </div>
                     <!-- <div class="col-8"> -->
                       <form action="{% url 'comment' obj.id %}" method="post">
                         {% csrf_token %}
@@ -163,71 +215,54 @@
                           <textarea class="form-control" name="comment" id="content" rows="3" placeholder="Haz tu comentario..."></textarea>
                         </div>
                     <div class="row">
-                          <div class="mt-3 text-center col-7">
+                          <div class="mt-3 text-center col">
                             <input class="btn text-white morado-oscuro" type="submit" value="Comentar">
                           </div>
                         </form>
                       <!-- </div> -->
-
-                      <!-- votar dislike -->
-                      <div class="mt-3 col-3">
-                        <br><br><br>
-                        <form class="d-flex flex-row" action="{% url 'dislike' obj.id %}" method="post">
-                          {% csrf_token %}
-                          <div class="text-center">
-                            {{obj.dislikes}}
-                            <input class="btn btn-danger" type="submit" value="Dislike">
-                          </div>
-                        </form>
-                      </div>
-
-                      <!-- votar like -->
-                      <div class="mt-3 col-2">
-                        <br><br><br>
-                        <form class="d-flex flex-row" action="{% url 'like' obj.id %}" method="post">
-                          {% csrf_token %}
-                          <div class="text-center">
-                            {{obj.likes}}
-                            <input class="btn btn-primary" type="submit" value="Like">
-                          </div>
-                        </form>
-                      </div>
-
                     </div>
+
                     {% endif %}
 
-                    <div class="col-2">
-                      <a class="btn morado-oscuro text-white" href="{% url 'details' obj.id %}">Ver más</a>
-                    </div> 
+                    
 
-                    {% if user.id == obj.author_nickname.id %}
-                    <form action="{% url 'delete' obj.id %}" method="post">
-                      {% csrf_token %}
-                      <div class="text-center">
-                        <input class="btn btn-danger" type="submit" value="Eliminar">
-                      </div>
-                    </form>
-                    {%endif%}
+                    
                   </div>
                 </div>
                 {% for com in comments %}
                   {%if com.id_review == obj%}
-                  <div class="card-body px-4 border rounded">
-                    <h5 class="card-text">Usuario: {{ com.username }}</h5>
-                    <p class="card-text">{{ com.creation_date }}</p>
-                    <p class="card-text">{{ com.content }}</p>
-                  </div>
-                  {% if user.id == com.username.id %}
-                  <div class="col-2">
-                    <a class="btn morado-oscuro text-white" href="{% url 'modifyComment' com.id %}">Modificar</a>
-                  </div> 
-                  <form action="{% url 'deleteComment' com.id %}" method="post">
-                    {% csrf_token %}
-                    <div class="text-center">
-                      <input class="btn btn-danger" type="submit" value="Eliminar">
+                  <div class="card px-3 borde morado-claro mx-1 my-4">
+                    <div class="row row-cols-1 d-flex justify-content-center">
+                        <div class="row card-header mx-1">
+                            <div class="col-9">
+                                <h5 class="card-text">Usuario: {{ com.username }}</h5>
+                            </div>
+                            <div class="col-3">
+                                <p class="card-text">{{ com.creation_date }}</p>
+                            </div>
+                        </div>
+                        <div class="row p-3">
+                           <p class="card-text">{{ com.content }}</p> 
+                        </div>
+                        <div class="row m-2 d-flex justify-content-center">
+                          {% if user.id == com.username.id %}
+                            <div class="col-6 d-flex justify-content-end">
+                                <a class="btn morado-oscuro text-white" href="{% url 'modifyComment' com.id %}">Modificar</a>
+                                
+                            </div>
+                            <div class="col-6 d-flex justify-content-start">
+                               
+                            <form action="{% url 'deleteComment' com.id %}" method="post">
+                            {% csrf_token %}
+                                <div class="text-center">
+                                    <input class="btn btn-danger" type="submit" value="Eliminar">
+                                </div>
+                            </form>
+                            {%endif%} 
+                            </div>
+                        </div>
                     </div>
-                  </form>
-                  {%endif%}
+                  </div>
                   {%endif%}
                 {% endfor %}
                 {% endfor %}
@@ -237,11 +272,6 @@
                 {% if not page_obj  %}
                 <div class="pb-1 fs-1"> No se encontraron resultados :(</div>
                 {% endif %}
-
-          <div class="col-2"></div>
-          {% if user.is_authenticated %}
-          <div class="col-1 bg-info"></div>
-          {%endif%}
           
       </div>
           </div>
@@ -251,7 +281,7 @@
 </body>
 <footer>
   <div class="bg-transparent fixed-bottom">
-    <a class="btn rounded-circle morado-oscuro float-end m-3" href="#Últimas_reseñas">
+    <a class="btn rounded-circle morado-oscuro float-end m-3" href="#top">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="30" fill="white" class="bi bi-arrow-up" viewBox="0 0 17 15">
         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
       </svg>

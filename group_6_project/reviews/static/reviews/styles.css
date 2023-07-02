@@ -42,6 +42,12 @@
       border-color: #452547;
       border-width: thick;
     }
+.borde-comentarios {
+    border-radius: 20px;
+    border-style: solid;
+    border-color: #452547;
+    border-width: thick;
+}
 .titulo-reseña{
     font-size:30px;
 }

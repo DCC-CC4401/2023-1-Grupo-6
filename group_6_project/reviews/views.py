@@ -418,26 +418,22 @@ def ModifyComment(request, com_id):
         return render(request, 'reviews/ModifyComment.html', {'form':form, 'review': com.id_review, 'com': com})
 
     
-# Función que modifica una reseña.
-# Toma los nuevos datos ingresados por el usuario para actualizar su reseña, y actualiza la base de datos. Antes se verifica que esté 
+# Función que modifica un comentario.
+# Toma los nuevos datos ingresados por el usuario para actualizar su comentario, y actualiza la base de datos. Antes se verifica que esté 
 # logueado y que lo que ingresó sea válido.
 def ModifiedComment(request, com_id):
     if request.method == 'POST':
         form = CreateComment(request.POST, request.FILES)
         # Si los datos son válidos según el formulario 
         if form.is_valid() and request.user.is_authenticated:
-            content = form.cleaned_data["content"] # Contenido de la review
-            # Se crea la Review
+            content = form.cleaned_data["content"] # Contenido del comentario
+            # Se crea el comentario
             com = Comments.objects.filter(id=com_id)[0]
             com.content=content
-            # Guarda la Review
+            # Guarda el comentario
             com.save()
-            # Redirige a '/myReviews/'
+            # Redirige a '/ShowReviews/'
             return redirect('/ShowReviews/')
-
-
-
-
 
 # Redirige a '/createReview/'
 def GoCreateReview(request):
@@ -472,4 +468,4 @@ def LogOut(request):
 def reviewDetails(request, review_id):
     review = Review.objects.filter(id=review_id)[0]
     comments = Comments.objects.filter(id_review=review)
-    return render(request, 'reviews/reviewDetails.html', {'review': review, 'comments': comments})
+    return render(request, 'reviews/reviewDetails.html', {'review': review, 'comments': comments, 'categories': categories})
