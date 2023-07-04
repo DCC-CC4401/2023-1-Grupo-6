@@ -1,6 +1,6 @@
-# OpiCard
+# OpiCards
 
-OpiCard consiste en un sitio web donde distintos usuarios pueden públicar, leer y comentar reseñas. Para esto, los usuarios deben crear una cuenta en el sitio, la cual le será útil para comentar reseñas bajo su propio nickname, crear, modificar y eliminar sus propias reseñas, puntuar otras reseñas, entre otras funcionalidades.\
+OpiCards consiste en un sitio web donde distintos usuarios pueden públicar, leer y comentar reseñas. Para esto, los usuarios deben crear una cuenta en el sitio, la cual le será útil para comentar reseñas bajo su propio nickname, crear, modificar y eliminar sus propias reseñas, puntuar otras reseñas, entre otras funcionalidades.\
 \
 El sitio cuenta con una página de inicio de sesión, una página de registro de nuevos usuarios, una página de inicio con las últimas 5 reseñas publicadas de otros usuarios, y una página donde el usuario puede ver su perfil con sus propias reseñas. Además cuenta con formularios para las distintas funcionalidades, como formulario de inicio de sesión, formulario de registro de usuario, formulario de creación de reseña y formulario de comentarios.\
 \
@@ -76,16 +76,14 @@ Si hace click en eliminar la reseña será eliminada y desaparecerá de la pági
 ![](images/image8.jpg)
 \
 Si hace click en Like en la reseña, aumentará su contador de "me gusta". Si vuelve a hacer click en ese botón, decrecerá el contador. Usted no puede aumentar el contador de "me gusta" y el de "no me gusta" al mismo tiempo, prevalece la función del último botón presionado.
-![](images/image8.jpg)
-\
 Si hace click en Dislike en la reseña, aumentará su contador de "no me gusta". Si vuelve a hacer click en ese botón, decrecerá el contador. Usted no puede aumentar el contador de "me gusta" y el de "no me gusta" al mismo tiempo, prevalece la función del último botón presionado.
-![](images/image8.jpg)
+![](images/image8-1.PNG)
 \
 Si hace click en Filtrar en la página de inicio, sólo se mostrarán las reseñas que coincidan con los criterios (username y categoría) especificados en los campos junto al botón. 
-![](images/image8.jpg)
+![](images/image8-2.PNG)
 \
 Si hace click en Comentar en la reseña, se creará un objeto comentario (con el texto ingresado en el campo anterior) que aparecerá en la parte inferior de la reseña al recargar la página. 
-![](images/image8.jpg)
+![](images/image8-3.PNG)
 \
 Al hacer click en Cerrar sesión desaparecerá la barra izquierda con los datos de su perfil y en lugar de Cerrar sesión aparecerá la opción Iniciar sesión
 ![](images/image9.jpg)
