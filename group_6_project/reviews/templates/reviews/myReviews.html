@@ -155,8 +155,40 @@
                         </form>
                           {%endif%}
                       </div>  
+                      <!-- votar dislike -->
+                      <div class="col-2 d-flex justify-content-end">
+                        <form class="" action="{% url 'dislike' obj.id %}" method="post">
+                          {% csrf_token %}
+                          <div class="text-center">
+                            {{obj.dislikes}}
+                            <input class="bg-transparent" style="background-image: url('../../static/reviews/hand-thumbs-down-fill.svg'); border:none; background-repeat:no-repeat;background-size:100% 100%;" type="submit" value="   ">
+                          </div>
+                        </form>
+                      </div>
+
+                      <!-- votar like -->
+                      <div class="col-2 d-flex justify-content-start">
+                        <form class="" action="{% url 'like' obj.id %}" method="post">
+                          {% csrf_token %}
+                          <div class="text-center">
+                            {{obj.likes}}
+                            <input class="bg-transparent" style="background-image: url('../../static/reviews/hand-thumbs-up-fill.svg'); border:none; background-repeat:no-repeat;background-size:100% 100%;" type="submit" value="   ">
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <div class="row my-3">
+                    </div>
                       <div class="col-4">
-                      </div>  
+                      </div> 
+                      <div class="row">
+                        <div class="col">
+                        <div class="text-align d-flex justify-content-center pt-3 pb-1">
+                          <a class="btn text-center morado-oscuro text-white" href="{% url 'details' obj.id %}">Ver más</a>
+                        </div> 
+                      </div> 
+                      </div>
+                      
                     </div>
                   </form>
                   </div>{%endif%}

@@ -202,10 +202,6 @@
                       </div>
                     </div>
                     <div class="row my-3">
-                      
-                      
-                      
-                      
                     </div>
                     <!-- <div class="col-8"> -->
                       <form action="{% url 'comment' obj.id %}" method="post">
@@ -221,13 +217,9 @@
                         </form>
                       <!-- </div> -->
                     </div>
-
-                    {% endif %}
-
-                    
-
-                    
                   </div>
+                    {% endif %}
+                  
                 </div>
                 {% for com in comments %}
                   {%if com.id_review == obj%}
@@ -235,7 +227,7 @@
                     <div class="row row-cols-1 d-flex justify-content-center">
                         <div class="row card-header mx-1">
                             <div class="col-9">
-                                <h5 class="card-text">Usuario: {{ com.username }}</h5>
+                                <h5 class="card-text">Comentario: {{ com.username }}</h5>
                             </div>
                             <div class="col-3">
                                 <p class="card-text">{{ com.creation_date }}</p>
@@ -258,8 +250,9 @@
                                     <input class="btn btn-danger" type="submit" value="Eliminar">
                                 </div>
                             </form>
-                            {%endif%} 
                             </div>
+                            {%endif%} 
+                            
                         </div>
                     </div>
                   </div>
