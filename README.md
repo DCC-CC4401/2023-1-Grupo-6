@@ -31,8 +31,8 @@ $ source env\Scripts\activate
 * Django 4.2
 * pytz 2020.1
 * sqlparse 0.4.3
-* tzdata 2023.3\
-* Pillow 9.5.0
+* tzdata 2023.3
+* Pillow 9.5.0\
 Pueden instalarse todas con el siguiente comando:
 ```
 $ pip install -r requirements.txt
@@ -54,7 +54,7 @@ Para poder utilizar la aplicación debe haber realizado los pasos de instalació
 Debe entrar a entrar a http://127.0.0.1:8000/register donde podrá ver el formulario de registro de usuario, donde deberá crear una cuenta
 ![](images/image1.jpg)
 \
-Una vez creada la cuenta será se rediccionará a la página de inicio de sesión http://127.0.0.1:8000/login/ de manera automática, donde deberá iniciar sesión con el username y contraseña que indicó en el formulario de registro
+Una vez creada la cuenta se rediccionará a la página de inicio de sesión http://127.0.0.1:8000/login/ de manera automática, donde deberá iniciar sesión con el username y contraseña que indicó en el formulario de registro
 ![](images/image2.jpg)
 \
 Ahora que la sesión fue iniciada se rediccionará a la página http://127.0.0.1:8000/ShowReviews/ donde podrá ver las reseñas de otros usuarios
